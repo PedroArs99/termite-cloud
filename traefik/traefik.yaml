@@ -1,0 +1,16 @@
+api:
+  dashboard: true
+
+entryPoints:
+  mqtt:
+    address: :1883
+  web:
+    address: :80
+  web-secure:
+    address: :443
+
+providers:
+  docker: 
+    defaultRule: Host(`{{ .Name }}.home`)
+    exposedByDefault: false
+    
