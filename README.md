@@ -1,1 +1,2 @@
-# termite-cloud-infrastructure
+# Termite Cloud Infrastructure
+
