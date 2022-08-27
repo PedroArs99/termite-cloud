@@ -43,8 +43,8 @@ services:
     container_name: zigbee2mqtt
     devices:
       - /dev/ttyUSB0:/dev/ttyUSB0
-    env_file:
-      - .env
+    environment:
+      - TZ=Europe/Berlin
     restart: always
     volumes:
       - ./zigbee2mqtt:/app/data
