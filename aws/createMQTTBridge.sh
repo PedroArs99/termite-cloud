@@ -2,6 +2,7 @@
 # 1. AWS CLI is already configured
 # 2. A policy iot:CreateKeysAndCertificate is created on IAM
 # 3. A policy iot:AttachPrincipalPolicy is created on IAM
+# 4. A policy iot:DescribeEndpoint is created on IAM
 # 4. The user has the policies assigned
 
 # Create an IAM policy for the bridge
