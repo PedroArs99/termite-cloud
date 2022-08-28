@@ -8,6 +8,9 @@ services:
     restart: always
     volumes:
       - mosquitto_data:/mosquitto
+      # This volume is used to configure the AWS Bridge
+      # Remove it if you are not using it
+      - ./mosquitto/certs:/etc/mosquitto/certs
   
   portainer:
     image: portainer/portainer-ce
