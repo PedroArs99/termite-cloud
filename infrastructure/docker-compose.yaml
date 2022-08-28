@@ -4,13 +4,15 @@ services:
   mosquitto: 
     image: eclipse-mosquitto
     container_name: mosquitto
-    command: "mosquitto -c /mosquitto-no-auth.conf"
+    # Remove the -c arg if you are not using aws
+    command: "mosquitto -c /etc/mosquitto/conf.d/aws.bridge.conf"
     restart: always
     volumes:
       - mosquitto_data:/mosquitto
       # This volume is used to configure the AWS Bridge
       # Remove it if you are not using it
       - ./mosquitto/certs:/etc/mosquitto/certs
+      - ./mosquitto/aws.bridge.conf:/etc/mosquitto/conf.d/aws.bridge.conf
   
   portainer:
     image: portainer/portainer-ce
