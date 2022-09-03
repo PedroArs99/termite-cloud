@@ -4,7 +4,8 @@ permit_join: true
 mqtt:
   base_topic: zigbee2mqtt
   server: mqtt://mosquitto
-# Zigbee Adapter path
+  user: <username>
+  password: <password>
 serial:
   port: /dev/ttyUSB0
 # Let Zigbee2MQTT generate a new network key on first start
