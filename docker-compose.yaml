@@ -4,16 +4,12 @@ services:
   mosquitto: 
     image: eclipse-mosquitto
     container_name: mosquitto
-    # Remove the -c arg if you are not using aws
-    command: "mosquitto -c /etc/mosquitto/conf.d/aws.bridge.conf"
+    command: "mosquitto -c /etc/mosquitto/conf.d/mosquitto.conf"
     restart: always
     volumes:
       - mosquitto_data:/mosquitto
       - ./mosquitto/users:/etc/mosquitto/users
-      # This volumes are used to configure the AWS Bridge
-      # Remove them if you are not using it
-      - ./mosquitto/aws.bridge.conf:/etc/mosquitto/conf.d/aws.bridge.conf
-      - ./mosquitto/certs:/etc/mosquitto/certs
+      - ./mosquitto/mosquitto.conf:/etc/mosquitto/conf.d/mosquitto.conf
   
   portainer:
     image: portainer/portainer-ce
@@ -38,7 +34,6 @@ services:
       - traefik.http.routers.dashboard.service=api@internal
     ports:
       - 80:80
-      - 443:443
     restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
