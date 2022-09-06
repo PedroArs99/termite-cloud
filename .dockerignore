@@ -1,3 +1,8 @@
 # API
 api/dist
 api/node_modules
+
+# UI 
+ui/.svelte-kit
+ui/build
+ui/node_modules
