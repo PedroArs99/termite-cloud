@@ -2,7 +2,7 @@ FROM node:current-alpine as api-build
 
 WORKDIR /app/api
 
-COPY api/package*.json .
+COPY api/package*.json ./
 
 RUN npm ci 
 
@@ -15,7 +15,7 @@ FROM node:current-alpine as ui-build
 
 WORKDIR /app/ui
 
-COPY ui/package*.json .
+COPY ui/package*.json ./
 
 RUN npm ci 
 
