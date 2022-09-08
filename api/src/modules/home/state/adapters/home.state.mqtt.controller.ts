@@ -10,8 +10,8 @@ export class HomeStateMqttController {
   constructor(private commandBus: CommandBus) {}
 
   @MessagePattern('zigbee2mqtt/bridge/state')
-  retainZigbee2MqttBridgeState(@Payload() state: string): void {
-    const stateValue = JSON.parse(state).state;
+  retainZigbee2MqttBridgeState(@Payload() state: any): void {
+    const stateValue = state["state"];
 
     this.logger.log(`zigbee2mqtt/bridge/state: ${stateValue}`);
     const command = new SaveHomeStateCommand('bridge/state', stateValue);
