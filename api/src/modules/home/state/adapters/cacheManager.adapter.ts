@@ -1,17 +1,17 @@
-import { CACHE_MANAGER, Inject, Injectable } from "@nestjs/common";
+import { Injectable } from "@nestjs/common";
+import { Key } from "readline";
 import { CacheManagerPort } from "../application/ports/CacheManager.port";
-import { Cache } from "cache-manager";
 
 @Injectable()
 export class CacheManagerAdapter implements CacheManagerPort {
-    constructor(@Inject(CACHE_MANAGER) private cacheManagerImpl: Cache){}
-    
+    private storage = new Map<string, any>();
+
     set(key: string, value: any): void {
-        this.cacheManagerImpl.set(key, value);
+        this.storage.set(key, value);
     }
 
-    get(key: string) {
-        return this.cacheManagerImpl.get(key);
+    get(key: string): any {
+        return this.storage.get(key);
     }
 
 }
