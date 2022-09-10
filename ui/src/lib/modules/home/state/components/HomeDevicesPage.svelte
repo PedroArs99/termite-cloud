@@ -12,18 +12,24 @@
 	onMount(() => fetchHomeState());
 </script>
 
-{#each devices as device}
-	<div class="card card-xs">
-		<div class="card-body">
-			<BulbImage clazz="border fill-primary rounded-full shadow-2xl p-3" width="64px" />
-			<h1>{device.friendlyName}</h1>
+<div id="device-list">
+	{#each devices as device}
+		<div class="card">
+			<div class="card-body">
+				<BulbImage clazz="border fill-primary rounded-full shadow-2xl p-3" width="64px" />
+				<h1 class="text-center">{device.friendlyName}</h1>
+			</div>
 		</div>
-	</div>
-{/each}
+	{/each}
+</div>
 
 <style lang="postcss">
 	.card-body {
 		display: flex;
 		align-items: center;
+	}
+
+	#device-list{
+		display: flex;
 	}
 </style>
