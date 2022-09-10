@@ -1,3 +1,3 @@
 export interface HomeState {
-    state: "online" | "offline";
+    bridgeState: "online" | "offline";
 }

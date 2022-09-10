@@ -9,7 +9,7 @@ export class GetHomeStateHandler implements IQueryHandler<GetHomeStateQuery> {
     
     async execute(query: GetHomeStateQuery): Promise<HomeState> {
         return {
-            state: await this.cacheManager.get("bridge/state")
+            bridgeState: await this.cacheManager.get("bridge/state")
         }
     }
 }

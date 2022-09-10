@@ -9,8 +9,8 @@
 <div class="card">
 	<div class="card-body">
 		<div class="flex justify-between">
-			<span>Bridge Status</span>
-			{#if $homeState.state === 'online'}
+			<span>Bridge state</span>
+			{#if $homeState.bridgeState === 'online'}
 				<span class="badge badge-success badge-outline">Online</span>
 			{:else}
 				<div class="badge badge-error badge-outline">Offline</div>
