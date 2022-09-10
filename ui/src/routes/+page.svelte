@@ -1,6 +1,5 @@
 <script lang="ts">
-import HomeStatePage from "../lib/modules/home/state/components/HomeStatePage.svelte";
-
+	import HomeDevicesPage from '$lib/modules/home/state/components/HomeDevicesPage.svelte';
 </script>
 
 <svelte:head>
@@ -8,4 +7,4 @@ import HomeStatePage from "../lib/modules/home/state/components/HomeStatePage.sv
 	<meta name="description" content="Termite Cloud App - Home Control" />
 </svelte:head>
 
-<HomeStatePage />
+<HomeDevicesPage />
