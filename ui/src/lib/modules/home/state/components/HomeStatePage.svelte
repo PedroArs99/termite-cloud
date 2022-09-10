@@ -6,4 +6,15 @@
 	onMount(() => fetchHomeState());
 </script>
 
-<h1>Home Store : {$homeState} </h1>
+<div class="card">
+	<div class="card-body">
+		<div class="flex justify-between">
+			<span>Bridge Status</span>
+			{#if $homeState.state === 'online'}
+				<span class="badge badge-success badge-outline">Online</span>
+			{:else}
+				<div class="badge badge-error badge-outline">Offline</div>
+			{/if}
+		</div>
+	</div>
+</div>
