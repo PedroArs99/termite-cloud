@@ -9,9 +9,9 @@ async function bootstrap() {
   app.connectMicroservice({
     transport: Transport.MQTT,
     options: {
-      url: 'mqtt://rpi:1883',
-      username: 'pedroars',
-      password: '5ce9ee69',
+      url: process.env.MQTT_URL,
+      username: process.env.MQTT_USERNAME,
+      password: process.env.MQTT_PASSWORD,
     },
   });
 
@@ -20,4 +20,5 @@ async function bootstrap() {
 
   await app.listen(3000);
 }
+
 bootstrap();
