@@ -3,7 +3,7 @@ import { CacheManagerAdapter } from "./adapters/cacheManager.adapter";
 import { HomeStateMqttController } from "./adapters/mqtt/home.state.mqtt.controller";
 import { CacheManagerPort } from "./application/ports/CacheManager.port";
 import { CqrsModule } from "@nestjs/cqrs";
-import { SaveHomeStateCommandHandler } from "./application/commands/save/saveHomeState.handler";
+import { SaveHomeStateCommandHandler } from "./application/commands/saveState/saveHomeState.handler";
 import { HomeStateRestController } from "./adapters/home.state.rest.controller";
 import { GetHomeStateHandler } from "./application/queries/getHomeState.handler";
 

@@ -1,7 +1,7 @@
 import { Controller, Logger } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { CommandBus } from '@nestjs/cqrs';
-import { SaveHomeStateCommand } from '../../application/commands/save/saveHomeState.command';
+import { SaveHomeStateCommand } from '../../application/commands/saveState/saveHomeState.command';
 import { HomeStateCacheKeys } from '../../domain/HomeState.model';
 import { DeviceMessage, messageToDevice } from './models/Device.message.model';
 
