@@ -35,16 +35,16 @@
 			{#if $homeState.bridgePermitJoinTimeout}
 				<span class="badge badge-info badge-outline">{$homeState.bridgePermitJoinTimeout} s</span>
 			{:else}
-				<div class="badge badge-info badge-outline">No timeout</div>
+				<div class="badge badge-info badge-outline">-</div>
 			{/if}
 		</div>
 
 		<div class="property-wrapper">
 			<span>Restart required</span>
 			{#if $homeState.bridgeRestartRequired}
-				<span class="badge badge-error badge-outline">Restart required</span>
+				<span class="badge badge-error badge-outline">Yes</span>
 			{:else}
-				<div class="badge badge-success badge-outline">No Restart required</div>
+				<div class="badge badge-success badge-outline">No</div>
 			{/if}
 		</div>
 		
