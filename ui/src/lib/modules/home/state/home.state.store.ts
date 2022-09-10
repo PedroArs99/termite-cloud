@@ -3,24 +3,20 @@ import type { HomeState } from './home.state.model';
 
 // Stores
 const initialState: HomeState = {
-	bridgeState: 'offline'
+	bridgeLogLevel: 'error',
+	bridgePermitJoin: false,
+	bridgePermitJoinTimeout: -1,
+	bridgeRestartRequired: true,
+	bridgeState: 'offline',
 };
 
 export const homeState = writable<HomeState>(initialState);
-
-// Reducers
-function setBridgeState(state: 'online' | 'offline'): HomeState {
-	return {
-		...homeState,
-		bridgeState: state
-	}
-}
 
 
 // Actions
 export function fetchHomeState() {
 	fetch('/api/home/state')
 		.then((response) => response.json())
-		.then((response) => homeState.set(setBridgeState(response.bridgeState)))
+		.then((response) => homeState.set(response))
 		.catch((error) => console.error(error));
 }
