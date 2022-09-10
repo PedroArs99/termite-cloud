@@ -4,6 +4,7 @@ import { CommandBus } from '@nestjs/cqrs';
 import { SaveHomeStateCommand } from '../../application/commands/saveState/saveHomeState.command';
 import { HomeStateCacheKeys } from '../../domain/HomeState.model';
 import { DeviceMessage, messageToDevice } from './models/Device.message.model';
+import { RegisterDevicesCommand } from '../../application/commands/registerDevices/registerDevices.command';
 
 @Controller({})
 export class HomeStateMqttController {
@@ -15,7 +16,7 @@ export class HomeStateMqttController {
   retainZigbee2MqttDevices(@Payload() devices: Array<DeviceMessage>){
     this.logger.debug(`Registered Devices: ${JSON.stringify(devices, null,2)}`);
     
-    const command = new SaveHomeStateCommand(HomeStateCacheKeys.devices, devices.map(message => messageToDevice(message)))
+    const command = new RegisterDevicesCommand(devices.map(message => messageToDevice(message)))
     this.commandBus.execute(command);
   }
 

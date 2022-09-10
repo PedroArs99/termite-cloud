@@ -1,5 +1,5 @@
 export interface Device {
-    friendlyName: string,
-    ieeeAddress: string,
-    supported: boolean,
+    friendlyName: string;
+    ieeeAddress: string;
+    type: string;
 } 

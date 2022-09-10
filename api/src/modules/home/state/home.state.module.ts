@@ -6,8 +6,9 @@ import { CqrsModule } from "@nestjs/cqrs";
 import { SaveHomeStateCommandHandler } from "./application/commands/saveState/saveHomeState.handler";
 import { HomeStateRestController } from "./adapters/home.state.rest.controller";
 import { GetHomeStateHandler } from "./application/queries/getHomeState.handler";
+import { RegisterDevicesCommandHandler } from "./application/commands/registerDevices/registerDevices.handler";
 
-const commandHandlers = [ SaveHomeStateCommandHandler ]
+const commandHandlers = [ SaveHomeStateCommandHandler, RegisterDevicesCommandHandler ]
 const controllers = [ HomeStateMqttController, HomeStateRestController ];
 const queryHandlers = [ GetHomeStateHandler ]
 @Module({
