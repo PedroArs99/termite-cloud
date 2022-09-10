@@ -6,5 +6,5 @@ export interface HomeState {
     bridgePermitJoinTimeout: number;
     bridgeRestartRequired: boolean;
     bridgeState: "online" | "offline";
-    devices: Array<Device>;
+    devices: Device[];
 }

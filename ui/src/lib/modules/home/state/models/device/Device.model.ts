@@ -1,10 +1,5 @@
-import type { VendorSpec } from "./VendorSpec.model";
-
 export interface Device {
-    description: string,
-    friendlyName: string,
-    ieeeAddress: string,
-    supported: boolean,
-    type: string,
-    vendorSpec: VendorSpec,
+    friendlyName: string;
+    ieeeAddress: string;
+    type: string;
 } 

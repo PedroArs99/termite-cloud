@@ -8,10 +8,10 @@ const initialState: HomeState = {
 	bridgePermitJoinTimeout: -1,
 	bridgeRestartRequired: true,
 	bridgeState: 'offline',
+	devices: []
 };
 
 export const homeState = writable<HomeState>(initialState);
-
 
 // Actions
 export function fetchHomeState() {
