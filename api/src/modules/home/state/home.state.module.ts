@@ -1,6 +1,6 @@
 import { CacheModule, Module } from "@nestjs/common";
 import { CacheManagerAdapter } from "./adapters/cacheManager.adapter";
-import { HomeStateMqttController } from "./adapters/home.state.mqtt.controller";
+import { HomeStateMqttController } from "./adapters/mqtt/home.state.mqtt.controller";
 import { CacheManagerPort } from "./application/ports/CacheManager.port";
 import { CqrsModule } from "@nestjs/cqrs";
 import { SaveHomeStateCommandHandler } from "./application/commands/save/saveHomeState.handler";

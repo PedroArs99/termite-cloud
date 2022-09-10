@@ -14,6 +14,7 @@ export class GetHomeStateHandler implements IQueryHandler<GetHomeStateQuery> {
             bridgePermitJoinTimeout: this.cacheManager.get(HomeStateCacheKeys.bridgePermitJoinTimeout),
             bridgeRestartRequired: this.cacheManager.get(HomeStateCacheKeys.bridgeRestartRequired),
             bridgeState: this.cacheManager.get(HomeStateCacheKeys.bridgeState),
+            devices: this.cacheManager.get(HomeStateCacheKeys.devices),
         }
     }
 }
