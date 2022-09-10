@@ -2,6 +2,7 @@ import { Controller, Logger } from '@nestjs/common';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { CommandBus } from '@nestjs/cqrs';
 import { SaveHomeStateCommand } from '../application/commands/save/saveHomeState.command';
+import { HomeStateCacheKeys } from '../domain/HomeState.model';
 
 @Controller({})
 export class HomeStateMqttController {
@@ -9,12 +10,27 @@ export class HomeStateMqttController {
 
   constructor(private commandBus: CommandBus) {}
 
+  @MessagePattern('zigbee2mqtt/bridge/info')
+  retainZigbee2MqttBridgeInfo(@Payload() info: any): void {
+    let command = new SaveHomeStateCommand(HomeStateCacheKeys.bridgeLogLevel, info["log_level"]);
+    this.commandBus.execute(command);
+
+    command = new SaveHomeStateCommand(HomeStateCacheKeys.bridgePermitJoin, info["permit_join"]);
+    this.commandBus.execute(command);
+    
+    command = new SaveHomeStateCommand(HomeStateCacheKeys.bridgePermitJoinTimeout, info["permit_join_timeout"]);
+    this.commandBus.execute(command);
+    
+    command = new SaveHomeStateCommand(HomeStateCacheKeys.bridgeRestartRequired, info["restart_required"]);
+    this.commandBus.execute(command);
+  }
+
   @MessagePattern('zigbee2mqtt/bridge/state')
   retainZigbee2MqttBridgeState(@Payload() state: any): void {
     const stateValue = state["state"];
 
     this.logger.log(`zigbee2mqtt/bridge/state: ${stateValue}`);
-    const command = new SaveHomeStateCommand('bridge/state', stateValue);
+    const command = new SaveHomeStateCommand(HomeStateCacheKeys.bridgeState, stateValue);
     this.commandBus.execute(command);
   }
 }
