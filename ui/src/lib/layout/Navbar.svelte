@@ -1,3 +1,6 @@
+<script>
+	import Icon from "$lib/utils/Icon.svelte";
+</script>
 <div class="navbar">
 	<div class="navbar-start">
 		<a href="/" class="btn btn-ghost normal-case text-xl">
@@ -5,8 +8,8 @@
 		</a>
 	</div>
 	<div class="navbar-end">
-		<a href="/home/state" class="btn btn-primary normal-case text-xl">
-			State
+		<a href="/home/state" class="btn btn-ghost normal-case text-xl">
+			<Icon icon="signal"/>
 		</a>
 	</div>
 </div>
