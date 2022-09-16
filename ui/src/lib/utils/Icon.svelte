@@ -1,12 +1,18 @@
 <script lang="ts">
 	import Fa from 'svelte-fa';
-	import { faSignal } from '@fortawesome/free-solid-svg-icons';
+	import { 
+        faLightbulb,
+        faSignal
+    } from '@fortawesome/free-solid-svg-icons';
 
-    export let icon: "signal";
+    export let clazz: string;
+    export let icon:  "lightbulb" | "signal";
+    export let size: string = "lg";
 
     let icons = {
+        "lightbulb": faLightbulb,
         "signal": faSignal
     }
 </script>
 
-<Fa icon={icons[icon]} />
+<Fa class={clazz} icon={icons[icon]} {size} />
