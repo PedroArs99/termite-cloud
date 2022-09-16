@@ -1,13 +1,13 @@
 <script lang="ts">
+	import Icon from '$lib/utils/Icon.svelte';
 	import type { Device } from '../../models/device/Device.model';
-	import BulbImage from './bulb/BulbImage.svelte';
 
 	export let device: Device;
 </script>
 
 <div class="card">
 	<div class="card-body">
-		<BulbImage clazz="border fill-primary rounded-full shadow-2xl p-3" width="64px" />
+		<Icon clazz="border rounded-full p-3" icon="lightbulb" size="5x" />
 		<h1 class="text-center">{device.friendlyName}</h1>
 	</div>
 </div>
