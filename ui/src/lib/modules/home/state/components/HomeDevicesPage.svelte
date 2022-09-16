@@ -2,10 +2,10 @@
 	import { onMount } from 'svelte';
 
 	import { fetchHomeState, homeState } from '../home.state.store';
-	import type { Device } from '../models/device/Device.model';
-	import BulbImage from './devices/bulb/BulbImage.svelte';
+	import type { Device as IDevice } from '../models/device/Device.model';
+	import Device from './devices/Device.svelte';
 
-	let devices: Device[];
+	let devices: IDevice[];
 
 	$: devices = $homeState.devices;
 
@@ -14,22 +14,17 @@
 
 <div id="device-list">
 	{#each devices as device}
-		<div class="card">
-			<div class="card-body">
-				<BulbImage clazz="border fill-primary rounded-full shadow-2xl p-3" width="64px" />
-				<h1 class="text-center">{device.friendlyName}</h1>
-			</div>
-		</div>
+		<Device {device} />
 	{/each}
 </div>
 
-<style lang="postcss">
-	.card-body {
+<style lang="scss">
+	#device-list {
 		display: flex;
-		align-items: center;
-	}
+		justify-content: space-between;
 
-	#device-list{
-		display: flex;
+		@media (min-width: 640px) {
+			justify-content: start;
+		}
 	}
 </style>
