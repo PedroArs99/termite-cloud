@@ -10,6 +10,7 @@ export function messageToDevice(message: DeviceMessage): Device {
   return {
     friendlyName: message.friendly_name,
     ieeeAddress: message.ieee_address,
-    type: message.type
+    type: message.type,
+    state: "undefined"
   }
 }
