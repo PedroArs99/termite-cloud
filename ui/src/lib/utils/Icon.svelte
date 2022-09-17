@@ -5,7 +5,7 @@
         faSignal
     } from '@fortawesome/free-solid-svg-icons';
 
-    export let clazz: string;
+    export let clazz: string = "";
     export let icon:  "lightbulb" | "signal";
     export let size: string = "lg";
 
