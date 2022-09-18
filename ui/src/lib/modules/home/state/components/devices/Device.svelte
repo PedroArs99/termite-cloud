@@ -25,7 +25,7 @@
 	});
 
 	$: if(device.state === "undefined") makeDeviceBlink();
-	$: deviceIconColor = device.state === "ON" ? "#efc070" : "#080703";
+	$: deviceIconColor = device.state !== "undefined" && device.state.state === "ON" ? "#efc070" : "#080703";
 </script>
 
 <div class="card">
