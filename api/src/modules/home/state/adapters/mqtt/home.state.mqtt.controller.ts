@@ -1,16 +1,28 @@
 import { Controller, Logger } from '@nestjs/common';
-import { MessagePattern, Payload } from '@nestjs/microservices';
+import { Ctx, MessagePattern, MqttContext, Payload } from '@nestjs/microservices';
 import { CommandBus } from '@nestjs/cqrs';
 import { SaveHomeStateCommand } from '../../application/commands/saveState/saveHomeState.command';
 import { HomeStateCacheKeys } from '../../domain/HomeState.model';
 import { DeviceMessage, messageToDevice } from './models/Device.message.model';
 import { RegisterDevicesCommand } from '../../application/commands/registerDevices/registerDevices.command';
+import { DeviceState } from '../../domain/device/DeviceState.model';
+import { UpdateDeviceStateCommand } from '../../application/commands/updateDeviceState/UpdateDeviceState.command';
+import { messageToDeviceState } from './models/DeviceState.message.model';
 
 @Controller({})
 export class HomeStateMqttController {
   logger = new Logger(HomeStateMqttController.name);
 
   constructor(private commandBus: CommandBus) {}
+
+  @MessagePattern('zigbee2mqtt/+')
+  updateDeviceState(@Ctx() mqttContext: MqttContext, @Payload() deviceState: DeviceState){
+    let friendly_name = mqttContext.getTopic().split("/")[1]
+    this.logger.log(`Received ${friendly_name} update: ${JSON.stringify(deviceState)}`)
+
+    let command = new UpdateDeviceStateCommand(friendly_name, messageToDeviceState(deviceState));
+    this.commandBus.execute(command);
+  }
 
   @MessagePattern('zigbee2mqtt/bridge/devices')
   retainZigbee2MqttDevices(@Payload() devices: Array<DeviceMessage>){
