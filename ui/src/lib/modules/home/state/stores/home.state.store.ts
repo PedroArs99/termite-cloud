@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store';
-import type { HomeState } from './models/HomeState.model';
+import type { HomeState } from '../models/HomeState.model';
 
 // Stores
 const initialState: HomeState = {
