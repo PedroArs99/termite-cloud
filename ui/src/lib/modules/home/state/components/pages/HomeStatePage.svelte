@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	import { fetchHomeState, homeState } from '../home.state.store';
+	import { fetchHomeState, homeState } from '../stores/home.state.store';
 
 	onMount(() => fetchHomeState());
 </script>

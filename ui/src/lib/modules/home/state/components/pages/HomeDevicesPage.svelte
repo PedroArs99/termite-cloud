@@ -1,9 +1,8 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-
-	import { fetchHomeState, homeState } from '../home.state.store';
-	import type { Device as IDevice } from '../models/device/Device.model';
-	import Device from './devices/Device.svelte';
+	import type {Device as IDevice} from '../../models/device/Device.model'
+	import { fetchHomeState, homeState } from '../../stores/home.state.store';
+	import Device from '../devices/Device.svelte';
 
 	let devices: IDevice[];
 
