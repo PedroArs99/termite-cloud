@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { Key } from "readline";
-import { CacheManagerPort } from "../application/ports/CacheManager.port";
+import { CacheManagerPort } from "../../application/ports/CacheManager.port";
 
 @Injectable()
 export class CacheManagerAdapter implements CacheManagerPort {

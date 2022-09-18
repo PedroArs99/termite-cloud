@@ -1,7 +1,7 @@
 import { Controller, Get } from "@nestjs/common";
-import { HomeState } from "../domain/HomeState.model";
+import { HomeState } from "../../domain/HomeState.model";
 import { QueryBus } from "@nestjs/cqrs";
-import { GetHomeStateQuery } from "../application/queries/getHomeState.query";
+import { GetHomeStateQuery } from "../../application/queries/getHomeState.query";
 
 @Controller("/home/state")
 export class HomeStateRestController {
