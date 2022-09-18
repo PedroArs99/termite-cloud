@@ -6,6 +6,7 @@
     } from '@fortawesome/free-solid-svg-icons';
 
     export let clazz: string = "";
+    export let color: string | undefined = undefined;
     export let icon:  "lightbulb" | "signal";
     export let size: string = "lg";
 
@@ -15,4 +16,4 @@
     }
 </script>
 
-<Fa class={clazz} icon={icons[icon]} {size} />
+<Fa class={clazz} {color} icon={icons[icon]} {size} />
