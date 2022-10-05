@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+    @apply text-accent-content;
+}
+
+.badge {
+    @apply h-full;
+}
+
+.card {
+    @apply m-3 bg-base-100 border border-accent text-primary-content shadow-2xl;
+}
