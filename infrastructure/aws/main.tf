@@ -16,7 +16,7 @@ variable "region" {
 
 // Resources
 provider "aws" {
-  region                   = var.region
+  region = var.region
 }
 
 resource "aws_vpc" "tch_vpc" {
