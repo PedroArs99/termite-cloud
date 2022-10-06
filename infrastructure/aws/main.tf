@@ -14,8 +14,20 @@ variable "region" {
 }
 // ---
 
+// Resources
 provider "aws" {
   region = var.region
   shared_credentials_files = [ ".credentials" ]
+  profile = "pedro-arenas"
 }
 
+resource "aws_vpc" "tch_vpc" {
+  cidr_block = "10.0.0.0/16"
+  enable_dns_hostnames = true
+  enable_dns_support = true
+
+  tags = {
+    Name = "tch"
+  }
+}
+// ---
