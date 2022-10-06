@@ -1,7 +1,7 @@
 terraform {
   required_providers {
     aws = {
-      source = "hashicorp/aws"
+      source  = "hashicorp/aws"
       version = "4.33.0"
     }
   }
@@ -9,7 +9,7 @@ terraform {
 
 // Variables
 variable "region" {
-  type = string
+  type    = string
   default = "eu-central-1"
 }
 // ---
@@ -17,14 +17,12 @@ variable "region" {
 // Resources
 provider "aws" {
   region = var.region
-  shared_credentials_files = [ ".credentials" ]
-  profile = "pedro-arenas"
 }
 
 resource "aws_vpc" "tch_vpc" {
-  cidr_block = "10.0.0.0/16"
+  cidr_block           = "10.0.0.0/16"
   enable_dns_hostnames = true
-  enable_dns_support = true
+  enable_dns_support   = true
 
   tags = {
     Name = "tch"
