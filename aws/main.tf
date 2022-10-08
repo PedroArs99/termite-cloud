@@ -71,11 +71,11 @@ resource "aws_security_group" "allow_ssh" {
   vpc_id      = aws_vpc.tch_vpc.id
 
   ingress {
-    description      = "SSH from VPC"
-    from_port        = 22
-    to_port          = 22
-    protocol         = "tcp"
-    cidr_blocks      = [aws_vpc.tch_vpc.cidr_block]
+    description = "SSH from VPC"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = [aws_vpc.tch_vpc.cidr_block]
   }
 
   egress {
@@ -97,11 +97,11 @@ resource "aws_security_group" "allow_http" {
   vpc_id      = aws_vpc.tch_vpc.id
 
   ingress {
-    description      = "HTTP from VPC"
-    from_port        = 80
-    to_port          = 80
-    protocol         = "tcp"
-    cidr_blocks      = [aws_vpc.tch_vpc.cidr_block]
+    description = "HTTP from VPC"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = [aws_vpc.tch_vpc.cidr_block]
   }
 
   egress {
@@ -118,7 +118,7 @@ resource "aws_security_group" "allow_http" {
 }
 
 resource "aws_key_pair" "tch_key_pair" {
-  key_name = "tch_key"
+  key_name   = "tch_key"
   public_key = file("~/.ssh/tch_rsa.pub")
 }
 
@@ -138,4 +138,33 @@ data "aws_ami" "ubuntu" {
   owners = ["099720109477"] # Amazon
 }
 
+resource "aws_network_interface" "tch_ec2_network_interface" {
+  subnet_id   = aws_subnet.tch_subnet.id
+  private_ips = ["10.0.1.4"]
+
+  security_groups = [
+    aws_security_group.allow_ssh.id,
+    aws_security_group.allow_http.id
+  ]
+
+  tags = {
+    Name = "primary_network_interface"
+  }
+}
+
+resource "aws_instance" "tch_ec2" {
+  ami           = data.aws_ami.ubuntu.id
+  instance_type = "t2.micro"
+
+  key_name = aws_key_pair.tch_key_pair.id
+
+  tags = {
+    Name = "tch"
+  }
+
+  network_interface {
+    network_interface_id = aws_network_interface.tch_ec2_network_interface.id
+    device_index         = 0
+  }
+}
 // ---
