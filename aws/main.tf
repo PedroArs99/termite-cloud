@@ -39,4 +39,12 @@ resource "aws_subnet" "tch_subnet" {
   }
 }
 
+resource "aws_internet_gateway" "tch_gateway" {
+  vpc_id = aws_vpc.tch_vpc.id
+
+  tags = {
+    Name = "tch"
+  }
+}
+
 // ---
