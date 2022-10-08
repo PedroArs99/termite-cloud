@@ -47,4 +47,17 @@ resource "aws_internet_gateway" "tch_gateway" {
   }
 }
 
+resource "aws_route_table" "tch_route_table" {
+  vpc_id = aws_vpc.tch_vpc.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.tch_gateway.id
+  }
+
+  tags = {
+    Name = "tch"
+  }
+}
+
 // ---
