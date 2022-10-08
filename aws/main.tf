@@ -60,4 +60,8 @@ resource "aws_route_table" "tch_route_table" {
   }
 }
 
+resource "aws_route_table_association" "tch_rt_association" {
+  subnet_id      = aws_subnet.tch_subnet.id
+  route_table_id = aws_route_table.tch_route_table.id
+}
 // ---
