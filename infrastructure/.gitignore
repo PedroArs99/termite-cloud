@@ -6,8 +6,3 @@ zigbee2mqtt/coordinator_backup.json
 zigbee2mqtt/database.db
 zigbee2mqtt/log
 zigbee2mqtt/state.json
-
-# Terraform
-**/.terraform/*
-*.tfstate
-*.tfstate.*
