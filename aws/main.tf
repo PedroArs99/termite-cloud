@@ -1,68 +1,48 @@
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "4.33.0"
-    }
-  }
-}
-
-// Variables
-variable "region" {
-  type    = string
-  default = "eu-central-1"
-}
-// ---
-
-// Resources
-provider "aws" {
-  region = var.region
-}
-
 resource "aws_vpc" "tch_vpc" {
   cidr_block           = "10.0.0.0/16"
   enable_dns_hostnames = true
   enable_dns_support   = true
 
   tags = {
-    Name = "tch"
+    Name = var.resourceName
   }
 }
 
-resource "aws_subnet" "tch_subnet" {
+resource "aws_internet_gateway" "tch_igw" {
+  vpc_id = aws_vpc.tch_vpc.id
+
+  tags = {
+    Name = var.resourceName
+  }
+}
+
+resource "aws_route_table" "tch_main_rt" {
+  vpc_id = aws_vpc.tch_vpc.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.tch_igw.id
+  }
+
+  tags = {
+    Name = var.resourceName
+  }
+}
+
+resource "aws_subnet" "tch_pub_subnet" {
   vpc_id                  = aws_vpc.tch_vpc.id
   cidr_block              = "10.0.1.0/24"
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "tch"
+    Name = var.resourceName
   }
 }
 
-resource "aws_internet_gateway" "tch_gateway" {
-  vpc_id = aws_vpc.tch_vpc.id
-
-  tags = {
-    Name = "tch"
-  }
-}
-
-resource "aws_route_table" "tch_route_table" {
-  vpc_id = aws_vpc.tch_vpc.id
-
-  route {
-    cidr_block = "0.0.0.0/0"
-    gateway_id = aws_internet_gateway.tch_gateway.id
-  }
-
-  tags = {
-    Name = "tch"
-  }
-}
-
+// pub_subnet with main_rt associa
 resource "aws_route_table_association" "tch_rt_association" {
-  subnet_id      = aws_subnet.tch_subnet.id
-  route_table_id = aws_route_table.tch_route_table.id
+  subnet_id      = aws_subnet.tch_pub_subnet.id
+  route_table_id = aws_route_table.tch_main_rt.id
 }
 
 resource "aws_security_group" "allow_ssh" {
@@ -122,24 +102,8 @@ resource "aws_key_pair" "tch_key_pair" {
   public_key = file("~/.ssh/tch_rsa.pub")
 }
 
-data "aws_ami" "ubuntu" {
-  most_recent = true
-
-  filter {
-    name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-jammy-22.04-amd64-server-*"]
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-
-  owners = ["099720109477"] # Amazon
-}
-
 resource "aws_network_interface" "tch_ec2_network_interface" {
-  subnet_id   = aws_subnet.tch_subnet.id
+  subnet_id   = aws_subnet.tch_pub_subnet.id
   private_ips = ["10.0.1.4"]
 
   security_groups = [
@@ -159,7 +123,7 @@ resource "aws_instance" "tch_ec2" {
   key_name = aws_key_pair.tch_key_pair.id
 
   tags = {
-    Name = "tch"
+    Name = var.resourceName
   }
 
   network_interface {
@@ -167,4 +131,3 @@ resource "aws_instance" "tch_ec2" {
     device_index         = 0
   }
 }
-// ---
