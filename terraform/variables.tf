@@ -1,5 +1,5 @@
 variable "resourceName" {
-  type = string
+  type    = string
   default = "Termite-Cloud"
 }
 

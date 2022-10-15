@@ -131,3 +131,19 @@ resource "aws_instance" "tch_ec2" {
     device_index         = 0
   }
 }
+
+resource "aws_route53_zone" "termite_cloud" {
+  name = "termite.cloud"
+
+  tags = {
+    Name = "termite.cloud"
+  }
+}
+
+resource "aws_route53_record" "termite_cloud" {
+  zone_id = aws_route53_zone.termite_cloud.zone_id
+  name    = "termite.cloud"
+  type    = "A"
+  ttl     = 300
+  records = [aws_instance.tch_ec2.public_ip]
+}
