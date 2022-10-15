@@ -7,6 +7,6 @@ entryPoints:
 
 providers:
   docker: 
-    defaultRule: Host(`{{ .Name }}.home`)
+    defaultRule: Host(`{{ .Name }}.termite.cloud`)
     exposedByDefault: false
     
