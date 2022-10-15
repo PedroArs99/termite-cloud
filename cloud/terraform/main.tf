@@ -99,7 +99,7 @@ resource "aws_security_group" "allow_http" {
 
 resource "aws_key_pair" "tch_key_pair" {
   key_name   = "tch_key"
-  public_key = file("~/.ssh/tch_rsa.pub")
+  public_key = file("~/.ssh/ubuntu@tch.pub")
 }
 
 resource "aws_network_interface" "tch_ec2_network_interface" {
