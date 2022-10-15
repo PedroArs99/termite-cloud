@@ -1,0 +1,42 @@
+version: '3.8'
+services:
+  mosquitto: 
+    image: eclipse-mosquitto
+    container_name: mosquitto
+    command: "mosquitto -c /etc/mosquitto/conf.d/mosquitto.conf"
+    restart: always
+    volumes:
+      - mosquitto_data:/mosquitto
+      - ./mosquitto/users:/etc/mosquitto/users
+      - ./mosquitto/mosquitto.conf:/etc/mosquitto/conf.d/mosquitto.conf
+  
+  portainer:
+    image: portainer/portainer-ce
+    container_name: portainer
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.portainer.entrypoints=web
+      - traefik.http.routers.portainer.rule=Host(`portainer.termite.cloud`)
+      - traefik.http.services.portainer.loadbalancer.server.port=9000
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+
+  traefik:
+    image: traefik
+    container_name: traefik
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.dashboard.entrypoints=web
+      - traefik.http.routers.dashboard.rule=Host(`traefik.termite.cloud`)
+      - traefik.http.routers.dashboard.service=api@internal
+    ports:
+      - 80:80
+    restart: always
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./traefik/traefik.yaml:/etc/traefik/traefik.yaml
+volumes:
+  mosquitto_data:
+  portainer_data:
