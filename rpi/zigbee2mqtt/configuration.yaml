@@ -3,9 +3,7 @@ permit_join: true
 # MQTT Server config
 mqtt:
   base_topic: zigbee2mqtt
-  server: mqtt://mosquitto
-  user: <username>
-  password: <password>
+  server: mqtt://termite.cloud
 serial:
   port: /dev/ttyUSB0
 # Let Zigbee2MQTT generate a new network key on first start
