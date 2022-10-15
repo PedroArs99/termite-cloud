@@ -1,0 +1,16 @@
+---
+- name: Create User with RSA key and Enable SSH
+  hosts: "{{ nodes }}"
+  become: true
+  tasks:
+    - name : Create user with secret key
+      user:
+          name: "{{ username }}"
+          shell: /bin/bash 
+          ssh_key_file: "~/.ssh/{{ username }}@tc"
+          ssh_key_type: rsa
+
+    - name: Add the pub key to the authorized list
+      authorized_key:
+        user: "{{ username }}"
+        key: "{{ lookup('file', '~/.ssh/{{ username }}@tc.pub') }}"
