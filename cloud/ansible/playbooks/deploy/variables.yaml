@@ -1,0 +1,4 @@
+nodes: tc
+src: ~/termite-cloud
+repo: https://github.com/PedroArs99/termite-cloud.git
+username: ubuntu

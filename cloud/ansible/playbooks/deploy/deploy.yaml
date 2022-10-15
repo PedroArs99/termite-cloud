@@ -1,0 +1,19 @@
+---
+- name: Deploy the Termite Cloud App
+  hosts: "{{ nodes }}"
+  tasks:
+    - name: Checkout
+      git:
+        repo: "{{ repo }}"
+        dest: "{{ src }}"
+
+    - name: Tear down
+      docker_compose:
+        project_src: "{{ src }}/cloud/docker"
+        state: absent
+    
+    - name: Launch
+      docker_compose:
+        project_src: "{{ src }}/cloud/docker"
+        state: present
+
