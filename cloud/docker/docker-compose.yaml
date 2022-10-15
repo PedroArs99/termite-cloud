@@ -3,12 +3,9 @@ services:
   mosquitto: 
     image: eclipse-mosquitto
     container_name: mosquitto
-    command: "mosquitto -c /etc/mosquitto/conf.d/mosquitto.conf"
     restart: always
     volumes:
       - mosquitto_data:/mosquitto
-      - ./mosquitto/users:/etc/mosquitto/users
-      - ./mosquitto/mosquitto.conf:/etc/mosquitto/conf.d/mosquitto.conf
   
   portainer:
     image: portainer/portainer-ce
