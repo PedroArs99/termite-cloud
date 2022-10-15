@@ -97,6 +97,32 @@ resource "aws_security_group" "allow_http" {
   }
 }
 
+resource "aws_security_group" "allow_mqtt" {
+  name        = "allow_mqtt"
+  description = "Allow MQTT inbound traffic"
+  vpc_id      = aws_vpc.tch_vpc.id
+
+  ingress {
+    description = "MQTT from VPC"
+    from_port   = 1883
+    to_port     = 1883
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  tags = {
+    Name = "allow_mqtt"
+  }
+}
+
 resource "aws_key_pair" "tch_key_pair" {
   key_name   = "tch_key"
   public_key = file("~/.ssh/ubuntu@tch.pub")
@@ -108,7 +134,8 @@ resource "aws_network_interface" "tch_ec2_network_interface" {
 
   security_groups = [
     aws_security_group.allow_ssh.id,
-    aws_security_group.allow_http.id
+    aws_security_group.allow_http.id,
+    aws_security_group.allow_mqtt.id
   ]
 
   tags = {
