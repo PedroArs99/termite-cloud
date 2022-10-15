@@ -5,12 +5,14 @@
   tasks:
     - name : Create user with secret key
       user:
-          name: "{{ username }}"
+          name: "{{ item }}"
           shell: /bin/bash 
-          ssh_key_file: "~/.ssh/{{ username }}@tc"
+          ssh_key_file: "~/.ssh/{{ item }}@tc"
           ssh_key_type: rsa
+      loop: "{{ username }}"
 
     - name: Add the pub key to the authorized list
       authorized_key:
-        user: "{{ username }}"
-        key: "{{ lookup('file', '~/.ssh/{{ username }}@tc.pub') }}"
+        user: "{{ item }}"
+        key: "{{ lookup('file', '~/.ssh/{{ item }}@tc.pub') }}"
+      loop: "{{ username }}"

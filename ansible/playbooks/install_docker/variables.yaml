@@ -1,0 +1,4 @@
+nodes: tc
+users:
+  - pedro-arenas
+  - ansible
