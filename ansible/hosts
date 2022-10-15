@@ -1,0 +1,5 @@
+[tc]
+termite.cloud
+
+[tc:vars]
+ansible_user=ubuntu
