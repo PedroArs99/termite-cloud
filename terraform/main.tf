@@ -39,7 +39,7 @@ resource "aws_subnet" "tch_pub_subnet" {
   }
 }
 
-// pub_subnet with main_rt associa
+// pub_subnet with main_rt association
 resource "aws_route_table_association" "tch_rt_association" {
   subnet_id      = aws_subnet.tch_pub_subnet.id
   route_table_id = aws_route_table.tch_main_rt.id
