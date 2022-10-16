@@ -1,9 +1,0 @@
-name: CI/CD
-run-name: Building and Deploying Termite Cloud...
-on: push
-jobs: 
-  build:
-   runs-on: ubuntu-latest
-   steps:
-     - uses: actions/checkout@v3
-    
