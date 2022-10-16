@@ -1,8 +1,0 @@
-name: Build & Deploy
-run-name: Building and Deploying Termite Cloud...
-on: push
-jobs: 
-  Hello-World:
-    runs-on: ubuntu-latest
-    steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
