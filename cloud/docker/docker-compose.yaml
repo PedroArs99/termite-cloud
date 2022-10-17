@@ -36,7 +36,7 @@ services:
       - traefik.enable=true
       - traefik.http.routers.termite_cloud.entrypoints=web
       - traefik.http.routers.termite_cloud.rule=Host(`termite.cloud`)
-      - traefik.http.routers.termite_cloud.loadbalancer.server.port=3000
+      - traefik.http.services.termite_cloud.loadbalancer.server.port=3000
 
   traefik:
     image: traefik
