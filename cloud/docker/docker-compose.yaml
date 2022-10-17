@@ -3,6 +3,7 @@ services:
   mosquitto: 
     image: eclipse-mosquitto
     container_name: mosquitto
+    command: "mosquitto -c /mosquitto-no-auth.conf"
     labels:
       - traefik.enable=true
       - traefik.tcp.routers.mosquitto.entrypoints=mqtt
@@ -11,6 +12,7 @@ services:
     restart: always
     volumes:
       - mosquitto_data:/mosquitto
+      - ./mosquitto:/etc/mosquitto
   
   portainer:
     image: portainer/portainer-ce
