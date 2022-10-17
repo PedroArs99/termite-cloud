@@ -25,6 +25,17 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer_data:/data
 
+  termite_cloud:
+    image: ghcr.io/pedroars99/termite-cloud:latest
+    container_name: termite_cloud
+    env_file:
+      - .env
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.termite_cloud.entrypoints=web
+      - traefik.http.routers.termite_cloud.rule=Host(`termite.cloud`)
+      - traefik.http.routers.termite_cloud.loadbalancer.server.port=3000
+
   traefik:
     image: traefik
     container_name: traefik
