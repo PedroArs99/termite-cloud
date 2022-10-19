@@ -1,15 +1,7 @@
-<script>
-	import Icon from "$lib/utils/Icon.svelte";
-</script>
 <div class="navbar">
-	<div class="navbar-start">
+	<div class="navbar-center">
 		<a href="/" class="btn btn-ghost normal-case text-xl">
 			<img src="/favicon.png" alt="Termite Home Logo" width="64px">
-		</a>
-	</div>
-	<div class="navbar-end">
-		<a href="/home/state" class="btn btn-ghost normal-case text-xl">
-			<Icon icon="signal"/>
 		</a>
 	</div>
 </div>
