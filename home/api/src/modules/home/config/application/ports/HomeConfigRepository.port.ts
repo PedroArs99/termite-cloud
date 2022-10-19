@@ -1,4 +1,4 @@
-import { HomeConfig } from "../models/HomeConfig.model";
+import { HomeConfig } from "../../models/HomeConfig.model";
 
 export interface HomeConfigRepository {
     get(): HomeConfig

@@ -1,6 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { HomeConfig } from "../../models/HomeConfig.model";
-import { HomeConfigRepository } from "../../ports/HomeConfigRepository.port";
+import { HomeConfigRepository } from "../../application/ports/HomeConfigRepository.port";
 
 @Injectable()
 export class InMemoryHomeConfigRepository implements HomeConfigRepository {
