@@ -1,5 +1,6 @@
 export class HomeConfig {
-  private constructor(private readonly bridgeState: 'online' | 'offline') {}
+  private constructor(readonly bridgeState: 'online' | 'offline') {}
+
 
   setBridgeState(bridgeState: "online" | "offline"): HomeConfig {
     return {
