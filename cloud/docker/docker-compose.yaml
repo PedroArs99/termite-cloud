@@ -29,6 +29,7 @@ services:
 
   termite_cloud:
     image: ghcr.io/pedroars99/termite-cloud:latest
+    pull_policy: always
     container_name: termite_cloud
     env_file:
       - .env
