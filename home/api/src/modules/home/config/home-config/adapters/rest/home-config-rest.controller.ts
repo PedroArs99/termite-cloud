@@ -1,4 +1,11 @@
-import { Controller } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 
-@Controller('home-config-rest')
-export class HomeConfigRestController {}
+@Controller("/config")
+export class HomeConfigRestController {
+    @Get()
+    getHomeConfig(): HomeConfigRestDto {
+        return {
+            bridgeState: "offline"
+        }
+    }
+}
