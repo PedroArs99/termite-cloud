@@ -2,7 +2,7 @@
 	import { onMount } from 'svelte';
 	import { fetchHomeConfig, homeConfig } from '../HomeConfig.store';
 
-	onMount(() => fetchHomeConfig);
+	onMount(fetchHomeConfig);
 </script>
 
 <div class="card">

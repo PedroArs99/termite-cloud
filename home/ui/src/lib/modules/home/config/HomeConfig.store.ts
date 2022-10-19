@@ -11,5 +11,5 @@ export const homeConfig = writable(initialState)
 export function fetchHomeConfig() {
     fetch("/api/config")
         .then(response => response.json())
-        .then(response => console.log(response))
+        .then((config: HomeConfig) => homeConfig.set(config))
 }
