@@ -6,6 +6,10 @@ import { Device } from "../../models/Device.model";
 export class InMemoryDeviceRepository implements DeviceRepository {
     private devices: Array<Device> = new Array();
     
+    findAll(): Array<Device> {
+        return this.devices;
+    }
+
     upsertAll(devices: Device[]): void {
         this.devices = devices;
     }

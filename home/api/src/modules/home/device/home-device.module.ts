@@ -3,8 +3,10 @@ import { CqrsModule } from "@nestjs/cqrs";
 import { HomeDevicesMqttController } from "./adapters/mqtt/home-devices-mqtt.controller";
 import { InMemoryDeviceRepository } from "./adapters/persistence/InMemoryDeviceRepository.service";
 import { UpsertDevicesHandler } from "./application/commands/upsert-devices.handler";
+import { GetAllDevicesHandler } from "./application/queries/GetAllDevices.handler";
 
 const handlers = [
+    GetAllDevicesHandler,
     UpsertDevicesHandler
 ]
 @Module({
