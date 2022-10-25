@@ -3,7 +3,10 @@ import { OnGatewayInit, WebSocketGateway } from "@nestjs/websockets";
 import { DeviceEvent } from "../../models/Device.event";
 import { Namespace } from "socket.io"
 
-@WebSocketGateway({ namespace: "/events"})
+@WebSocketGateway({ 
+    namespace: "/events",
+    cors: true
+})
 export class DeviceWebSocketsGateway implements OnGatewayInit<Namespace> {
     private namespace!: Namespace;
 
