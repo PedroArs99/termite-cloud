@@ -1,31 +1,48 @@
-import { Injectable } from "@nestjs/common";
-import { DeviceRepository } from "../../application/ports/DeviceRepository.port";
-import { Device } from "../../models/Device.model";
+import { Injectable } from '@nestjs/common';
+import { EventEmitter2 } from '@nestjs/event-emitter';
+import { DeviceRepository } from '../../application/ports/DeviceRepository.port';
+import { Device } from '../../models/Device.model';
 
 @Injectable()
 export class InMemoryDeviceRepository implements DeviceRepository {
-    private devices: Array<Device> = new Array();
-    
-    findAll(): Array<Device> {
-        return this.devices;
+  private devices: Array<Device> = new Array();
+
+  constructor(private eventEmitter: EventEmitter2) {}
+
+  findAll(): Array<Device> {
+    return this.devices;
+  }
+
+  findByFriendlyName(friendlyName: string): Device | undefined {
+    return this.devices.find((device) => device.friendlyName === friendlyName);
+  }
+
+  upsert(device: Device): void {
+    const index = this.devices.findIndex(
+      (d) => d.friendlyName === device.friendlyName,
+    );
+
+    if (index >= 0) {
+      this.devices.splice(index, 1);
     }
 
-    findByFriendlyName(friendlyName: string): Device | undefined {
-        return this.devices.find((device) => device.friendlyName === friendlyName);
-    }
+    this.devices = [...this.devices, device];
+    this.triggerEvents(device);
+  }
 
-    upsert(device: Device): void {
-        const index = this.devices.findIndex(d => d.friendlyName === device.friendlyName );
+  upsertAll(devices: Device[]): void {
+    this.devices = devices;
+    this.triggerEvents(this.devices)
+  }
 
-        if(index >= 0){
-            this.devices.splice(index, 1)
-        } 
+  private triggerEvents(device: Device): void;
+  private triggerEvents(devices: Array<Device>): void;
+  private triggerEvents(devices: Device | Array<Device>): void {
+    if (!Array.isArray(devices)) devices = [devices];
 
-        this.devices = [...this.devices, device]
-    }
-
-    upsertAll(devices: Device[]): void {
-        this.devices = devices;
-    }
-
+    devices
+      .map((device) => device.getEvents())
+      .reduce((acc, event) => (acc.includes(event) ? acc : [...acc, event]), [])
+      .forEach((event) => this.eventEmitter.emit('device', event));
+  }
 }
