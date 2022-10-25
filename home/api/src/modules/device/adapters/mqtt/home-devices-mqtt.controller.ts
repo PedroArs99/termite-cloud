@@ -23,11 +23,6 @@ export class HomeDevicesMqttController {
   @MessagePattern('zigbee2mqtt/bridge/devices')
   updateDeviceList(@Payload() devices: Array<DeviceDto>) {
     const friendlyNames = devices.map((device) => device.friendly_name);
-
-    this.logger.log(
-      `Devices connected to the bridge: ${friendlyNames.toString()}`,
-    );
-
     const command = new RegisterDevicesCommand(friendlyNames);
 
     this.commandBus.execute(command);
