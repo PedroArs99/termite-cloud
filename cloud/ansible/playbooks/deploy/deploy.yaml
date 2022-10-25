@@ -15,5 +15,6 @@
     - name: Launch
       docker_compose:
         project_src: "{{ src }}/cloud/docker"
+        pull: yes
         state: present
 
