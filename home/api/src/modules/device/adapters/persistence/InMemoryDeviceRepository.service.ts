@@ -10,6 +10,10 @@ export class InMemoryDeviceRepository implements DeviceRepository {
         return this.devices;
     }
 
+    findByFriendlyName(friendlyName: string): Device {
+        return this.devices.find((device) => device.friendlyName === friendlyName);
+    }
+
     upsertAll(devices: Device[]): void {
         this.devices = devices;
     }
