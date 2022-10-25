@@ -8,7 +8,7 @@
 <div class="card">
     <div class="card-body">
         <Icon clazz="border rounded-full p-3" icon="lightbulb" size="5x" />
-        <h1 class="text-center">{device.friendlyName}</h1>
+        <h1 class="text-center">{device.friendlyName.replace("_", " ")}</h1>
     </div>
 </div>
 
