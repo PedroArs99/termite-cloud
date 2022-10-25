@@ -1,7 +1,7 @@
 import { Controller, Logger } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
 import { Ctx, MessagePattern, MqttContext, Payload } from '@nestjs/microservices';
-import { UpsertDevicesCommand } from '../../application/commands/upsert-devices.command';
+import { RegisterDevicesCommand } from '../../application/commands/register/register-devices.command';
 import { DeviceDto } from './models/device-dto.model';
 import { DeviceStateDto } from './models/device-state-dto.model';
 
@@ -17,7 +17,7 @@ export class HomeDevicesMqttController {
 
       this.logger.log(`Devices connected to the bridge: ${friendlyNames.toString()}`)
       
-      const command = new UpsertDevicesCommand(friendlyNames);
+      const command = new RegisterDevicesCommand(friendlyNames);
 
       this.commandBus.execute(command);
     }

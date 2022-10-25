@@ -1,3 +1,3 @@
-export class UpsertDevicesCommand {
+export class RegisterDevicesCommand {
     constructor(readonly friendlyNames: string[]) {}
 }
