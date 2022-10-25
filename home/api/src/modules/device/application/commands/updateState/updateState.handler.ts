@@ -7,10 +7,15 @@ import { UpdateDeviceStateCommand } from "./updateState.command";
 @CommandHandler(UpdateDeviceStateCommand)
 export class UpdateDeviceStateHandler implements ICommandHandler<UpdateDeviceStateCommand, Device> {
     
-    constructor(@Inject("DeviceRepository") deviceRepo: DeviceRepository){}
+    constructor(@Inject("DeviceRepository") private deviceRepo: DeviceRepository){}
 
     async execute(command: UpdateDeviceStateCommand): Promise<Device> {
-        
+        let device = this.deviceRepo.findByFriendlyName(command.friendlyName)
+        device = device.updateState(command.deviceState)
+
+        this.deviceRepo.upsert(device)
+
+        return device
     }
     
 }
