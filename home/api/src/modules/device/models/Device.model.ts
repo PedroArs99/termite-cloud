@@ -9,6 +9,10 @@ export class Device {
     updateState(newState: DeviceState): Device {
       return new Device(this.friendlyName, newState)
     }
+
+    toString(): string {
+      return JSON.stringify(this);
+    }
   
     static create(friendlyName: string, state: DeviceState): Device{
       return new Device(friendlyName, state);
