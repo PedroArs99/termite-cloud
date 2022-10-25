@@ -16,9 +16,11 @@ export class InMemoryDeviceRepository implements DeviceRepository {
 
     upsert(device: Device): void {
         const index = this.devices.findIndex(d => d.friendlyName === device.friendlyName );
+
         if(index >= 0){
-            this.devices = this.devices.splice(index, 1)
+            this.devices.splice(index, 1)
         } 
+
         this.devices = [...this.devices, device]
     }
 
