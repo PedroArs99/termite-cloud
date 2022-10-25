@@ -12,7 +12,7 @@ export class Device extends DomainObject {
 
     updateState(newState: DeviceState): Device {
       const device = new Device(this.friendlyName, newState);
-      device.addEvent(new DeviceEvent())
+      device.addEvent(new DeviceEvent(device.friendlyName))
 
       return device
     }
@@ -23,7 +23,7 @@ export class Device extends DomainObject {
   
     static create(friendlyName: string, state: DeviceState): Device {
       const device = new Device(friendlyName, state);
-      device.addEvent(new DeviceEvent())
+      device.addEvent(new DeviceEvent(friendlyName))
 
       return device
     }
