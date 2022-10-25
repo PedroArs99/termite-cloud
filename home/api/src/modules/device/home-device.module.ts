@@ -4,11 +4,13 @@ import { HomeDevicesMqttController } from "./adapters/mqtt/home-devices-mqtt.con
 import { InMemoryDeviceRepository } from "./adapters/persistence/InMemoryDeviceRepository.service";
 import { HomeDevicesRestController } from "./adapters/rest/home-devices-rest.controller";
 import { RegisterDevicesHandler } from "./application/commands/register/register-devices.handler";
+import { UpdateDeviceStateHandler } from "./application/commands/updateState/updateState.handler";
 import { GetAllDevicesHandler } from "./application/queries/GetAllDevices.handler";
 
 const handlers = [
     GetAllDevicesHandler,
-    RegisterDevicesHandler
+    RegisterDevicesHandler,
+    UpdateDeviceStateHandler
 ]
 @Module({
     controllers: [

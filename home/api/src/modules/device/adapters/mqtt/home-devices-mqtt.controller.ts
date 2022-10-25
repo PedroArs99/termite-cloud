@@ -1,29 +1,49 @@
 import { Controller, Logger } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import { Ctx, MessagePattern, MqttContext, Payload } from '@nestjs/microservices';
+import {
+  Ctx,
+  MessagePattern,
+  MqttContext,
+  Payload,
+} from '@nestjs/microservices';
 import { RegisterDevicesCommand } from '../../application/commands/register/register-devices.command';
+import { UpdateDeviceStateCommand } from '../../application/commands/updateState/updateState.command';
 import { DeviceDto } from './models/device-dto.model';
-import { DeviceStateDto } from './models/device-state-dto.model';
+import {
+  DeviceStateDto,
+  deviceStateToDomain,
+} from './models/device-state-dto.model';
 
 @Controller()
 export class HomeDevicesMqttController {
-    private readonly logger = new Logger(HomeDevicesMqttController.name)
+  private readonly logger = new Logger(HomeDevicesMqttController.name);
 
-    constructor(private commandBus: CommandBus){}
+  constructor(private commandBus: CommandBus) {}
 
-    @MessagePattern('zigbee2mqtt/bridge/devices')
-    updateDeviceList(@Payload() devices: Array<DeviceDto>) {
-      const friendlyNames = devices.map(device => device.friendly_name)
+  @MessagePattern('zigbee2mqtt/bridge/devices')
+  updateDeviceList(@Payload() devices: Array<DeviceDto>) {
+    const friendlyNames = devices.map((device) => device.friendly_name);
 
-      this.logger.log(`Devices connected to the bridge: ${friendlyNames.toString()}`)
-      
-      const command = new RegisterDevicesCommand(friendlyNames);
+    this.logger.log(
+      `Devices connected to the bridge: ${friendlyNames.toString()}`,
+    );
 
-      this.commandBus.execute(command);
-    }
+    const command = new RegisterDevicesCommand(friendlyNames);
 
-    @MessagePattern('zigbee2mqtt/+')
-    updateDeviceState(@Ctx() metadata: MqttContext,  @Payload() state: DeviceStateDto) {
-      const device = metadata.getTopic().replace("zigbee2mqtt/", "")
-    }
+    this.commandBus.execute(command);
+  }
+
+  @MessagePattern('zigbee2mqtt/+')
+  updateDeviceState(
+    @Ctx() metadata: MqttContext,
+    @Payload() state: DeviceStateDto,
+  ) {
+    const friendlyName = metadata.getTopic().replace('zigbee2mqtt/', '');
+
+    const command = new UpdateDeviceStateCommand(
+      friendlyName,
+      deviceStateToDomain(state),
+    );
+    this.commandBus.execute(command);
+  }
 }
