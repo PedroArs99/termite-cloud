@@ -9,7 +9,9 @@ import { HomeConfigModule } from './modules/config/home-config.module';
   imports: [
     HomeConfigModule,
     HomeDeviceModule,
-    NestConfigModule.forRoot(),
+    NestConfigModule.forRoot({
+      isGlobal: true
+    }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'assets'),
       exclude: ['/api*'],
