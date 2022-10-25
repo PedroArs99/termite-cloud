@@ -1,5 +1,6 @@
 <script lang="ts">
-	import HomeConfig from '$lib/modules/home/config/components/HomeConfig.component.svelte';
+	import Config from '$lib/modules/config/components/Config.svelte';
+	import Devices from '$lib/modules/device/components/Devices.svelte';
 </script>
 
 <svelte:head>
@@ -7,4 +8,5 @@
 	<meta name="description" content="Termite Cloud App - Home Control" />
 </svelte:head>
 
-<HomeConfig />
+<Config />
+<Devices />
