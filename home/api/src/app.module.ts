@@ -1,14 +1,17 @@
 import { Module } from '@nestjs/common';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
-import { HomeModule } from './modules/home/home.module';
-import { ConfigModule } from '@nestjs/config'; 
+import { ConfigModule as NestConfigModule } from '@nestjs/config'; 
+import { HomeDeviceModule } from './modules/device/home-device.module';
+import { HomeConfigModule } from './modules/config/home-config.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
-    HomeModule,
-    // Seve UI Static files
+    HomeConfigModule,
+    HomeDeviceModule,
+    NestConfigModule.forRoot({
+      isGlobal: true
+    }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'assets'),
       exclude: ['/api*'],
