@@ -1,8 +1,9 @@
 import { Controller, Logger } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import { MessagePattern, Payload } from '@nestjs/microservices';
+import { Ctx, MessagePattern, MqttContext, Payload } from '@nestjs/microservices';
 import { UpsertDevicesCommand } from '../../application/commands/upsert-devices.command';
 import { DeviceDto } from './models/device-dto.model';
+import { DeviceStateDto } from './models/device-state-dto.model';
 
 @Controller()
 export class HomeDevicesMqttController {
@@ -19,5 +20,12 @@ export class HomeDevicesMqttController {
       const command = new UpsertDevicesCommand(friendlyNames);
 
       this.commandBus.execute(command);
+    }
+
+    @MessagePattern('zigbee2mqtt/+')
+    updateDeviceState(@Ctx() metadata: MqttContext,  @Payload() state: DeviceStateDto) {
+      const device = metadata.getTopic().replace("zigbee2mqtt/", "")
+      
+      
     }
 }
