@@ -25,7 +25,5 @@ export class HomeDevicesMqttController {
     @MessagePattern('zigbee2mqtt/+')
     updateDeviceState(@Ctx() metadata: MqttContext,  @Payload() state: DeviceStateDto) {
       const device = metadata.getTopic().replace("zigbee2mqtt/", "")
-      
-      
     }
 }

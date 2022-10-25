@@ -1,7 +1,7 @@
 export class DeviceState {
-    private constructor(private state: "ON" | "OFF"){}
+    private constructor(readonly power: "ON" | "OFF"){}
 
-    static create(state: "ON" | "OFF"): DeviceState {
-        return new DeviceState(state)
+    static create(power: "ON" | "OFF"): DeviceState {
+        return new DeviceState(power)
     }
 }
