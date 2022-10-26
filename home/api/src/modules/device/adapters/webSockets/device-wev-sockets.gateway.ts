@@ -1,6 +1,6 @@
 import { OnEvent } from "@nestjs/event-emitter";
 import { OnGatewayInit, WebSocketGateway } from "@nestjs/websockets";
-import { DeviceEvent } from "../../models/Device.event";
+import { DeviceUpsertedEvent } from "../../models/DeviceUpserted.event";
 import { Namespace } from "socket.io"
 
 @WebSocketGateway({ 
@@ -15,7 +15,7 @@ export class DeviceWebSocketsGateway implements OnGatewayInit<Namespace> {
     }
 
     @OnEvent("device")
-    notifyDeviceChange(_: DeviceEvent): void{
+    notifyDeviceChange(_: DeviceUpsertedEvent): void{
         this.namespace.emit("device");
     }
 }

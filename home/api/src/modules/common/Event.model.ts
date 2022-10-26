@@ -1,3 +1,5 @@
-export interface Event {
-    eventName: string;
+export class Event {
+    constructor(readonly eventName: string){}
+
+
 }
