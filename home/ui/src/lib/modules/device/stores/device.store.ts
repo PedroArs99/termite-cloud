@@ -14,7 +14,7 @@ export function fetchDevices() {
 }
 
 function initWebSockets() {
-	const socket = io("/events")
+	const socket = io("/events/devices")
 
-	socket.on("device", () => fetchDevices())
+	socket.on("deviceUpserted", () => fetchDevices())
 }
