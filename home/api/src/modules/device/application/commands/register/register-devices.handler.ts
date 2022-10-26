@@ -25,7 +25,7 @@ export class RegisterDevicesHandler
     );
 
     devices.forEach((device) => {
-      this.logger.log("Device Registered on Startup: ", device.friendlyName);
+      this.logger.log(`Device Registered on Startup: ${device.friendlyName}`);
       this.deviceService.refreshState(device.friendlyName);
     });
 
