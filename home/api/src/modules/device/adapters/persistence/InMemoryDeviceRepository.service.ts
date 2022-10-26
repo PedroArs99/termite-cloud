@@ -1,5 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
+import e from 'express';
+import { Event } from 'src/modules/common/Event.model';
 import { DeviceRepository } from '../../application/ports/DeviceRepository.port';
 import { Device } from '../../models/Device.model';
 
@@ -42,7 +44,8 @@ export class InMemoryDeviceRepository implements DeviceRepository {
 
     devices
       .map((device) => device.getEvents())
+      .flat()
       .reduce((acc, event) => (acc.includes(event) ? acc : [...acc, event]), [])
-      .forEach((event) => this.eventEmitter.emit('device', event));
+      .forEach((event: Event) => this.eventEmitter.emit(event.eventName, event));
   }
 }
