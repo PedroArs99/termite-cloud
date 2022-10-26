@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
-import e from 'express';
 import { Event } from 'src/modules/common/Event.model';
 import { DeviceRepository } from '../../application/ports/DeviceRepository.port';
 import { Device } from '../../models/Device.model';

@@ -17,6 +17,5 @@ export class DeviceWebSocketsGateway implements OnGatewayInit<Namespace> {
   @OnEvent('deviceUpserted')
   notifyDeviceChange(event: DeviceUpsertedEvent): void {
     this.namespace.emit(event.eventName);
-    console.log(`Event emitted: ${event.eventName}`)
   }
 }
