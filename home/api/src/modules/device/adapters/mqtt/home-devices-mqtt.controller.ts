@@ -22,7 +22,11 @@ export class HomeDevicesMqttController {
 
   @MessagePattern('zigbee2mqtt/bridge/devices')
   updateDeviceList(@Payload() devices: Array<DeviceDto>) {
-    const friendlyNames = devices.map((device) => device.friendly_name);
+    let friendlyNames = devices.map((device) => device.friendly_name);
+    
+    // Exclude coordinator
+    friendlyNames = friendlyNames.filter(name => name !== "Coordinator")
+
     const command = new RegisterDevicesCommand(friendlyNames);
 
     this.commandBus.execute(command);
