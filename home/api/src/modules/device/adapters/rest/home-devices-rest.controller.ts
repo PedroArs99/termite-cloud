@@ -15,10 +15,12 @@ export class HomeDevicesRestController {
 
   @Get()
   async getAllDevices(): Promise<Array<DeviceDto>> {
-    return this.queryBus.execute(new GetAllDevicesQuery());
+    const result = await this.queryBus.execute(new GetAllDevicesQuery());
+
+    return result.map((device: Device) => DeviceDto.fromDomain(device));
   }
 
-  @Put('/{friendlyName}')
+  @Put('/:friendlyName')
   async updateDeviceState(
     @Param('friendlyName') friendlyName: string,
     @Body() newState: DeviceStateDto,
@@ -29,6 +31,8 @@ export class HomeDevicesRestController {
       true,
     );
 
-    return this.commandBus.execute(command);
+    const result = await this.commandBus.execute(command);
+
+    return DeviceDto.fromDomain(result);;
   }
 }
