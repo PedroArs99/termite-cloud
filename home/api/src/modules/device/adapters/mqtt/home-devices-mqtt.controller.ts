@@ -1,5 +1,6 @@
-import { Controller, Logger } from '@nestjs/common';
+import { Controller, Inject, Logger } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
+import { OnEvent } from '@nestjs/event-emitter';
 import {
   Ctx,
   MessagePattern,
@@ -8,6 +9,8 @@ import {
 } from '@nestjs/microservices';
 import { RegisterDevicesCommand } from '../../application/commands/register/register-devices.command';
 import { UpdateDeviceStateCommand } from '../../application/commands/updateState/updateState.command';
+import { DeviceService } from '../../application/ports/DeviceService.port';
+import { DeviceMqttContextUpdated } from '../../models/events/DeviceMqttContextUpdated.event';
 import { DeviceDto } from './models/device-dto.model';
 import {
   DeviceStateDto,
@@ -18,11 +21,18 @@ import {
 export class HomeDevicesMqttController {
   private readonly logger = new Logger(HomeDevicesMqttController.name);
 
-  constructor(private commandBus: CommandBus) {}
+  constructor(
+    private commandBus: CommandBus,
+    @Inject('DeviceService') private deviceService: DeviceService,
+  ) {}
 
   @MessagePattern('zigbee2mqtt/bridge/devices')
   updateDeviceList(@Payload() devices: Array<DeviceDto>) {
-    const friendlyNames = devices.map((device) => device.friendly_name);
+    let friendlyNames = devices.map((device) => device.friendly_name);
+
+    // Exclude coordinator
+    friendlyNames = friendlyNames.filter((name) => name !== 'Coordinator');
+
     const command = new RegisterDevicesCommand(friendlyNames);
 
     this.commandBus.execute(command);
@@ -38,7 +48,13 @@ export class HomeDevicesMqttController {
     const command = new UpdateDeviceStateCommand(
       friendlyName,
       deviceStateToDomain(state),
+      false,
     );
     this.commandBus.execute(command);
+  }
+
+  @OnEvent('deviceMqttContextUpdated')
+  updateDeviceMqttContext(event: DeviceMqttContextUpdated): void {
+    this.deviceService.publishDeviceState(event.device);
   }
 }
