@@ -7,3 +7,9 @@ export interface DeviceStateDto {
 export function deviceStateToDomain(dto: DeviceStateDto): DeviceState {
     return DeviceState.create(dto.state);
 }
+
+export function deviceStateDtoFromDomain(deviceState: DeviceState): DeviceStateDto {
+    return {
+        state: deviceState.power
+    }
+}
