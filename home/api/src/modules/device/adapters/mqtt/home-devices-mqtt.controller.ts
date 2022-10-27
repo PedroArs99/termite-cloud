@@ -42,6 +42,7 @@ export class HomeDevicesMqttController {
     const command = new UpdateDeviceStateCommand(
       friendlyName,
       deviceStateToDomain(state),
+      false
     );
     this.commandBus.execute(command);
   }
