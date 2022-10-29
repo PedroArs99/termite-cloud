@@ -1,5 +1,14 @@
 version: '3.8'
 services:
+
+  grafana:
+    image: grafana/grafana-oss
+    container_name: grafana
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.grafana.entrypoints=web
+      - traefik.http.routers.grafana.rule=Host(`grafana.termite.cloud`)
+      - traefik.http.services.gragana.loadbalancer.server.port=3000
   mosquitto: 
     image: eclipse-mosquitto
     container_name: mosquitto
