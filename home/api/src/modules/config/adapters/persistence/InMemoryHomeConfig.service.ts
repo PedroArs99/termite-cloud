@@ -4,7 +4,11 @@ import { HomeConfigRepository } from "../../application/ports/HomeConfigReposito
 
 @Injectable()
 export class InMemoryHomeConfigRepository implements HomeConfigRepository {
-    private homeConfig: HomeConfig = HomeConfig.create("offline")
+    private homeConfig: HomeConfig;
+
+    constructor(){
+        this.homeConfig = HomeConfig.create("offline");
+    }
 
     get(): HomeConfig {
         return this.homeConfig
