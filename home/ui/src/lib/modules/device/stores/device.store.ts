@@ -23,17 +23,23 @@ function initWebSockets() {
 }
 
 export function toggleDeviceState(device: Device) {
-	console.log(device);
 	const toggledDevice = device.toggleDeviceState();
+	putDeviceState(toggledDevice);
+}
 
+export function updateDeviceBrightness(device: Device, brightness: number) {
+	const updatedDevice = device.updateState(brightness);
+	putDeviceState(updatedDevice);
+}
+
+function putDeviceState(device: Device) {
 	fetch(`/api/devices/${device.friendlyName}`, {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json'
 		},
-		body: JSON.stringify(toggledDevice.state)
+		body: JSON.stringify(device.state)
 	})
 		.then((response) => response.json())
-		.then((response) => console.log(response))
 		.catch((error) => console.error(error));
 }
