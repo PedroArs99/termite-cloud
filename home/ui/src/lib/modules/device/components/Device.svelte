@@ -43,6 +43,10 @@
 </div>
 
 <style lang="scss">
+	.card {
+		max-width: 25rem;
+	}
+
 	.icon-wrapper {
 		display: contents;
 	}
