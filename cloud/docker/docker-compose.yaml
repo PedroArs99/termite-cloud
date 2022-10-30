@@ -9,6 +9,8 @@ services:
       - traefik.http.routers.grafana.entrypoints=web
       - traefik.http.routers.grafana.rule=Host(`grafana.termite.cloud`)
       - traefik.http.services.gragana.loadbalancer.server.port=3000
+    restart: always
+  
   mosquitto: 
     image: eclipse-mosquitto
     container_name: mosquitto
@@ -47,6 +49,7 @@ services:
       - traefik.http.routers.termite_cloud.entrypoints=web
       - traefik.http.routers.termite_cloud.rule=Host(`termite.cloud`)
       - traefik.http.services.termite_cloud.loadbalancer.server.port=3000
+    restart: always
 
   traefik:
     image: traefik
