@@ -1,3 +1,4 @@
 export interface DeviceState {
-    power: "ON" | "OFF"
+    power: "ON" | "OFF";
+    brightness: number;
 }

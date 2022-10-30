@@ -13,7 +13,5 @@
 </div>
 
 <style lang="scss">
-    #device-list {
-        display: flex;
-    }
+    
 </style>
