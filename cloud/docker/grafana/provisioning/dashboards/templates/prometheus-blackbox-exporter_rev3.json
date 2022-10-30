@@ -1,7 +1,7 @@
 {
   "__inputs": [
     {
-      "name": "DS_PROMETHEUS",
+      "name": "GRAFANA_DS_PROMETHEUS",
       "pluginId": "prometheus",
       "pluginName": "Prometheus",
       "type": "datasource",
@@ -78,7 +78,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#299c46"
       ],
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "${GRAFANA_DS_PROMETHEUS}",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -88,8 +88,8 @@
         "thresholdMarkers": true
       },
       "gridPos": {
-        "h": 2,
-        "w": 4,
+        "h": 3,
+        "w": 8,
         "x": 0,
         "y": 9
       },
@@ -172,7 +172,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "${GRAFANA_DS_PROMETHEUS}",
       "decimals": 0,
       "format": "none",
       "gauge": {
@@ -183,10 +183,10 @@
         "thresholdMarkers": true
       },
       "gridPos": {
-        "h": 2,
-        "w": 4,
+        "h": 3,
+        "w": 8,
         "x": 0,
-        "y": 11
+        "y": 12
       },
       "id": 20,
       "interval": null,
@@ -268,7 +268,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "${GRAFANA_DS_PROMETHEUS}",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -278,10 +278,10 @@
         "thresholdMarkers": true
       },
       "gridPos": {
-        "h": 2,
-        "w": 4,
+        "h": 3,
+        "w": 8,
         "x": 0,
-        "y": 13
+        "y": 15
       },
       "id": 27,
       "interval": null,
@@ -348,7 +348,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#299c46"
       ],
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "${GRAFANA_DS_PROMETHEUS}",
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -358,10 +358,10 @@
         "thresholdMarkers": true
       },
       "gridPos": {
-        "h": 2,
-        "w": 4,
-        "x": 0,
-        "y": 15
+        "h": 3,
+        "w": 8,
+        "x": 9,
+        "y": 8
       },
       "id": 18,
       "interval": null,
@@ -442,7 +442,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#299c46"
       ],
-      "datasource": "${DS_PROMETHEUS}",
+      "datasource": "${GRAFANA_DS_PROMETHEUS}",
       "decimals": 2,
       "format": "dtdurations",
       "gauge": {
@@ -453,10 +453,10 @@
         "thresholdMarkers": true
       },
       "gridPos": {
-        "h": 2,
+        "h": 3,
         "w": 10,
-        "x": 4,
-        "y": 15
+        "x": 9,
+        "y": 11
       },
       "id": 19,
       "interval": null,
@@ -630,7 +630,7 @@
       {
         "allValue": null,
         "current": {},
-        "datasource": "${DS_PROMETHEUS}",
+        "datasource": "${GRAFANA_DS_PROMETHEUS}",
         "hide": 0,
         "includeAll": true,
         "label": null,
