@@ -1,6 +1,14 @@
 version: '3.8'
 services:
 
+  blackbox_exporter:
+    image: prom/blackbox-exporter
+    container_name: blackbox_exporter
+    command: --config.file=/config/blackbox.yaml
+    restart: always
+    volumes:
+      - ./prometheus/blackbox.yaml:/config/blackbox.yaml"
+
   grafana:
     image: grafana/grafana-oss
     container_name: grafana
@@ -37,6 +45,18 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - portainer_data:/data
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.prometheus.entrypoints=web
+      - traefik.http.routers.prometheus.rule=Host(`prometheus.termite.cloud`)
+      - traefik.http.services.prometheus.loadbalancer.server.port=9090
+    restart: always
+    volumes:
+      - prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
 
   termite_cloud:
     image: ghcr.io/pedroars99/termite-cloud:latest
