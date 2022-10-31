@@ -12,6 +12,7 @@ import {
 export class S3DeviceRepository implements DeviceRepository {
   private logger = new Logger(S3DeviceRepository.name);
   private s3Client: S3Client;
+  private bucketName: string;
 
   constructor(private configService: ConfigService) {
     this.s3Client = new S3Client({
@@ -21,11 +22,13 @@ export class S3DeviceRepository implements DeviceRepository {
       },
       region: this.configService.get('S3_REGION'),
     });
+
+    this.bucketName = this.configService.get('S3_BUCKET_NAME');
   }
 
   async findAll(): Promise<Device[]> {
     const command = new ListObjectsCommand({
-      Bucket: this.configService.get('S3_BUCKET_NAME'),
+      Bucket: this.bucketName,
     });
 
     const result = await this.s3Client.send(command);
@@ -35,8 +38,8 @@ export class S3DeviceRepository implements DeviceRepository {
     return Promise.all(devices);
   }
 
-  findByFriendlyName(friendlyName: string): Device {
-    throw new Error('Method not implemented.');
+  async findByFriendlyName(friendlyName: string): Promise<Device> {
+    return this.getObject(friendlyName);
   }
 
   upsert(device: Device): void {
@@ -49,7 +52,7 @@ export class S3DeviceRepository implements DeviceRepository {
 
   private async getObject(key: string): Promise<Device> {
     const getObjectCommand = new GetObjectCommand({
-      Bucket: this.configService.get('S3_BUCKET_NAME'),
+      Bucket: this.bucketName,
       Key: key,
     });
 
