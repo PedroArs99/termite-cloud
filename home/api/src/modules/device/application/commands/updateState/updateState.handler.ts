@@ -12,7 +12,7 @@ export class UpdateDeviceStateHandler implements ICommandHandler<UpdateDeviceSta
     constructor(@Inject("DeviceRepository") private deviceRepo: DeviceRepository){}
 
     async execute(command: UpdateDeviceStateCommand): Promise<Device> {
-        let device = this.deviceRepo.findByFriendlyName(command.friendlyName)
+        let device = await this.deviceRepo.findByFriendlyName(command.friendlyName)
         
         if(!device) {
             this.logger.log(`New device registered on runtime: ${command.friendlyName}`,)

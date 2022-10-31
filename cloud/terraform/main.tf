@@ -159,6 +159,15 @@ resource "aws_instance" "tch_ec2" {
   }
 }
 
+resource "aws_s3_bucket" "tch_storage" {
+    bucket = lower("${var.resourceName}-storage")  
+}
+
+resource "aws_s3_bucket_acl" "tch_storage_acl" {
+    bucket = aws_s3_bucket.tch_storage.id
+    acl = "private"
+}
+
 resource "aws_route53_zone" "termite_cloud" {
   name = "termite.cloud"
 

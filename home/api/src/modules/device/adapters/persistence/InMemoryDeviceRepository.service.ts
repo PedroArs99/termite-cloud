@@ -10,15 +10,15 @@ export class InMemoryDeviceRepository implements DeviceRepository {
 
   constructor(private eventEmitter: EventEmitter2) {}
 
-  findAll(): Array<Device> {
+  async findAll(): Promise<Array<Device>> {
     return this.devices;
   }
 
-  findByFriendlyName(friendlyName: string): Device | undefined {
+  async findByFriendlyName(friendlyName: string): Promise<Device | undefined> {
     return this.devices.find((device) => device.friendlyName === friendlyName);
   }
 
-  upsert(device: Device): void {
+  async upsert(device: Device): Promise<void> {
     const index = this.devices.findIndex(
       (d) => d.friendlyName === device.friendlyName,
     );
@@ -31,9 +31,9 @@ export class InMemoryDeviceRepository implements DeviceRepository {
     this.triggerEvents(device);
   }
 
-  upsertAll(devices: Device[]): void {
+  async upsertAll(devices: Device[]): Promise<void> {
     this.devices = devices;
-    this.triggerEvents(this.devices)
+    this.triggerEvents(this.devices);
   }
 
   private triggerEvents(device: Device): void;
@@ -45,6 +45,8 @@ export class InMemoryDeviceRepository implements DeviceRepository {
       .map((device) => device.getEvents())
       .flat()
       .reduce((acc, event) => (acc.includes(event) ? acc : [...acc, event]), [])
-      .forEach((event: Event) => this.eventEmitter.emit(event.eventName, event));
+      .forEach((event: Event) =>
+        this.eventEmitter.emit(event.eventName, event),
+      );
   }
 }

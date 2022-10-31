@@ -1,8 +1,8 @@
 import { Device } from "../../models/Device.model";
 
 export interface DeviceRepository {
-    findAll(): Array<Device>
-    findByFriendlyName(friendlyName: string): Device | undefined
-    upsert(device: Device): void
-    upsertAll(devices: Array<Device>): void
+    findAll(): Promise<Array<Device>>
+    findByFriendlyName(friendlyName: string): Promise<Device | undefined>
+    upsert(device: Device): Promise<void>
+    upsertAll(devices: Array<Device>): Promise<void>
 }
