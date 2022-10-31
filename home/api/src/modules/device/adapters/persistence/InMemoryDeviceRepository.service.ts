@@ -18,7 +18,7 @@ export class InMemoryDeviceRepository implements DeviceRepository {
     return this.devices.find((device) => device.friendlyName === friendlyName);
   }
 
-  upsert(device: Device): void {
+  async upsert(device: Device): Promise<void> {
     const index = this.devices.findIndex(
       (d) => d.friendlyName === device.friendlyName,
     );
@@ -31,7 +31,7 @@ export class InMemoryDeviceRepository implements DeviceRepository {
     this.triggerEvents(device);
   }
 
-  upsertAll(devices: Device[]): void {
+  async upsertAll(devices: Device[]): Promise<void> {
     this.devices = devices;
     this.triggerEvents(this.devices);
   }

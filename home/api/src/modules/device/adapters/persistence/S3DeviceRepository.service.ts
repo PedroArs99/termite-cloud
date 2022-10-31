@@ -6,7 +6,9 @@ import {
   S3Client,
   ListObjectsCommand,
   GetObjectCommand,
+  PutObjectCommand
 } from '@aws-sdk/client-s3';
+import { S3Device } from './S3Device.model';
 
 @Injectable()
 export class S3DeviceRepository implements DeviceRepository {
@@ -42,12 +44,24 @@ export class S3DeviceRepository implements DeviceRepository {
     return this.getObject(friendlyName);
   }
 
-  upsert(device: Device): void {
-    throw new Error('Method not implemented.');
+  async upsert(device: Device): Promise<void> {
+    const deviceDto =  new S3Device(device.friendlyName, device.state)
+    const command = new PutObjectCommand({
+      Body: JSON.stringify(deviceDto),
+      Bucket: this.bucketName,
+      Key: device.friendlyName
+    })
+
+    const result = await this.s3Client.send(command);
+    if(result.$metadata.httpStatusCode !== 200){
+      throw Error(`Device ${device.friendlyName} was not successfully upserted on S3`)
+    } else {
+      this.logger.log(`Device ${device.friendlyName} upserted on S3`);
+    }
   }
 
-  upsertAll(devices: Device[]): void {
-    throw new Error('Method not implemented.');
+  async upsertAll(devices: Device[]): Promise<void> {
+    devices.forEach(device => this.upsert(device))
   }
 
   private async getObject(key: string): Promise<Device> {
