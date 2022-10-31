@@ -21,6 +21,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.199.0",
     "@nestjs/common": "^9.0.0",
     "@nestjs/config": "^2.2.0",
     "@nestjs/core": "^9.0.0",
@@ -32,7 +33,6 @@
     "@nestjs/serve-static": "^3.0.0",
     "@nestjs/websockets": "^9.1.6",
     "async-mqtt": "^2.6.3",
-    "aws-sdk": "^2.1243.0",
     "mqtt": "^4.3.7",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
