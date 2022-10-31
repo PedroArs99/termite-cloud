@@ -10,7 +10,7 @@ export class InMemoryDeviceRepository implements DeviceRepository {
 
   constructor(private eventEmitter: EventEmitter2) {}
 
-  findAll(): Array<Device> {
+  async findAll(): Promise<Array<Device>> {
     return this.devices;
   }
 
