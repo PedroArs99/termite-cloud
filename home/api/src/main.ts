@@ -26,9 +26,6 @@ async function bootstrap() {
   app.startAllMicroservices();
   app.setGlobalPrefix('api');
 
-  const logger = new Logger("main.ts");
-  logger.log(`S3_ACCESS_KEY: ${configService.get("S3_ACCESS_KEY")}`)
-
   await app.listen(3000);
 }
 
