@@ -9,6 +9,7 @@ import {
   PutObjectCommand
 } from '@aws-sdk/client-s3';
 import { S3Device } from './S3Device.model';
+import { EventEmitter2 } from '@nestjs/event-emitter';
 
 @Injectable()
 export class S3DeviceRepository implements DeviceRepository {
@@ -16,7 +17,10 @@ export class S3DeviceRepository implements DeviceRepository {
   private s3Client: S3Client;
   private bucketName: string;
 
-  constructor(private configService: ConfigService) {
+  constructor(
+    private configService: ConfigService,
+    private eventEmitter: EventEmitter2
+  ) {
     this.s3Client = new S3Client({
       credentials: {
         accessKeyId: this.configService.get('S3_ACCESS_KEY'),
@@ -56,6 +60,7 @@ export class S3DeviceRepository implements DeviceRepository {
     if(result.$metadata.httpStatusCode !== 200){
       throw Error(`Device ${device.friendlyName} was not successfully upserted on S3`)
     } else {
+      device.getEvents().forEach(event => this.eventEmitter.emit(event.eventName, event))
       this.logger.log(`Device ${device.friendlyName} upserted on S3`);
     }
   }
