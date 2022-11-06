@@ -123,49 +123,13 @@ resource "aws_security_group" "allow_mqtt" {
   }
 }
 
-resource "aws_key_pair" "tch_key_pair" {
-  key_name   = "tch_key"
-  public_key = file("~/.ssh/ubuntu@tch.pub")
-}
-
-resource "aws_network_interface" "tch_ec2_network_interface" {
-  subnet_id   = aws_subnet.tch_pub_subnet.id
-  private_ips = ["10.0.1.4"]
-
-  security_groups = [
-    aws_security_group.allow_ssh.id,
-    aws_security_group.allow_http.id,
-    aws_security_group.allow_mqtt.id
-  ]
-
-  tags = {
-    Name = "primary_network_interface"
-  }
-}
-
-resource "aws_instance" "tch_ec2" {
-  ami           = data.aws_ami.ubuntu.id
-  instance_type = "t2.micro"
-
-  key_name = aws_key_pair.tch_key_pair.id
-
-  tags = {
-    Name = var.resourceName
-  }
-
-  network_interface {
-    network_interface_id = aws_network_interface.tch_ec2_network_interface.id
-    device_index         = 0
-  }
-}
-
 resource "aws_s3_bucket" "tch_storage" {
-    bucket = lower("${var.resourceName}-storage")  
+  bucket = lower("${var.resourceName}-storage")
 }
 
 resource "aws_s3_bucket_acl" "tch_storage_acl" {
-    bucket = aws_s3_bucket.tch_storage.id
-    acl = "private"
+  bucket = aws_s3_bucket.tch_storage.id
+  acl    = "private"
 }
 
 resource "aws_route53_zone" "termite_cloud" {

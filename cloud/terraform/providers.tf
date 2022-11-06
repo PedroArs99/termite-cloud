@@ -8,7 +8,7 @@ terraform {
 
   backend "s3" {
     bucket = "termite-cloud-terraform-backend"
-    key = "terraform.tfstate"
+    key    = "terraform.tfstate"
     region = "eu-central-1"
   }
 }
