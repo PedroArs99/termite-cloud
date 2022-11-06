@@ -15,7 +15,7 @@
 </script>
 
 <div class="flex gap-1 my-3">
-	<Icon icon="cold" size="lg"/>
+	<Icon icon="cold" size="md"/>
 	<input
 		type="range"
 		min="250"
@@ -24,5 +24,5 @@
 		class="range range-xs"
 		on:change={(e) => onTemperatureChange(e)}
 	/>
-    <Icon icon="warm" size="lg"/>
+    <Icon icon="warm" size="md"/>
 </div>
