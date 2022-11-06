@@ -16,7 +16,7 @@ data "aws_ami" "ubuntu_ami" {
 
 resource "aws_key_pair" "ec2_key_pair" {
   key_name   = "tch_key"
-  public_key = file("~/.ssh/ubuntu@tch.pub")
+  public_key = file("./keys/ubuntu@termite.cloud.pub")
 }
 
 resource "aws_network_interface" "ec2_nic" {
