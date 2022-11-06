@@ -35,7 +35,7 @@ resource "aws_network_interface" "ec2_nic" {
 }
 
 resource "aws_instance" "ec2" {
-  ami           = data.aws_ami.ubuntu.id
+  ami           = data.aws_ami.ubuntu_ami.id
   instance_type = "t2.micro"
 
   key_name = aws_key_pair.ec2_key_pair.id
@@ -45,7 +45,7 @@ resource "aws_instance" "ec2" {
   }
 
   network_interface {
-    network_interface_id = aws_network_interface.tch_ec2_network_interface.id
+    network_interface_id = aws_network_interface.ec2_nic.id
     device_index         = 0
   }
 }
