@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import { Transport } from '@nestjs/microservices';
 import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
+import { Logger } from '@nestjs/common';
 
 async function bootstrap() {
   // Init App context
@@ -13,21 +14,20 @@ async function bootstrap() {
   const configService = app.get<ConfigService>(ConfigService);
   const envs = {
     mqtt_url: configService.get("MQTT_URL"),
-    mqtt_username: configService.get("MQTT_USERNAME"),
-    mqtt_password: configService.get("MQTT_PASSWORD"),
   }
 
   app.connectMicroservice({
     transport: Transport.MQTT,
     options: {
       url: envs.mqtt_url,
-      username: envs.mqtt_username,
-      password: envs.mqtt_password,
     },
   });
 
   app.startAllMicroservices();
   app.setGlobalPrefix('api');
+
+  const logger = new Logger("main.ts");
+  logger.log(`S3_ACCESS_KEY: ${configService.get("S3_ACCESS_KEY")}`)
 
   await app.listen(3000);
 }
