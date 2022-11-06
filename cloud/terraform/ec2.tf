@@ -37,15 +37,21 @@ resource "aws_network_interface" "ec2_nic" {
 resource "aws_instance" "ec2" {
   ami           = data.aws_ami.ubuntu_ami.id
   instance_type = "t2.micro"
-
-  key_name = aws_key_pair.ec2_key_pair.id
-
-  tags = {
-    Name = var.resourceName
-  }
+  key_name      = aws_key_pair.ec2_key_pair.id
 
   network_interface {
     network_interface_id = aws_network_interface.ec2_nic.id
     device_index         = 0
+  }
+
+  root_block_device {
+    delete_on_termination = false
+    tags = {
+      Name = var.resourceName
+    }
+  }
+
+  tags = {
+    Name = var.resourceName
   }
 }
