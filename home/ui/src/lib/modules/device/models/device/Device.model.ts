@@ -18,13 +18,8 @@ export class Device {
 	}
 
 	updateState(
-		brightness: number
+		newState: DeviceState
 	): Device {
-		const patchedState = {
-			...this.state,
-			brightness
-		}
-
-		return new Device(this.friendlyName, patchedState);
+		return new Device(this.friendlyName, newState);
 	}
 }
