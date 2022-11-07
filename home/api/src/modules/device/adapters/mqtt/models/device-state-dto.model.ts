@@ -1,5 +1,5 @@
 import { DeviceState } from 'src/modules/device/models/Device-State.model';
-import ColorConverter from 'cie-rgb-color-converter';
+import * as ColorConverter from 'cie-rgb-color-converter';
 
 export interface DeviceStateDto {
   brightness: number;

@@ -18,7 +18,7 @@ export class RegisterDevicesHandler
   ) {}
 
   async execute(command: RegisterDevicesCommand): Promise<Array<Device>> {
-    const undefinedState = DeviceState.create('OFF', 0, 370);
+    const undefinedState = DeviceState.create('OFF', 0, 370, '#EFC070');
 
     const devices = command.friendlyNames.map((friendlyName) =>
       Device.create(friendlyName, undefinedState),
