@@ -33,7 +33,10 @@
     "@nestjs/serve-static": "^3.0.0",
     "@nestjs/websockets": "^9.1.6",
     "async-mqtt": "^2.6.3",
+    "cie-rgb-color-converter": "^1.0.6",
+    "i": "^0.3.7",
     "mqtt": "^4.3.7",
+    "npm": "^8.19.3",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^7.2.0"
