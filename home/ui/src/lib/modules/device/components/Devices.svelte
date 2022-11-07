@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { devices, fetchDevices } from '../stores/device.store';
-    import Device from './Device.svelte'
+	import Device from './Device.svelte';
 
 	onMount(() => fetchDevices());
 </script>
@@ -13,5 +13,9 @@
 </div>
 
 <style lang="scss">
-    
+	@media (min-width: 768px) {
+		#device-list {
+			display: flex;
+		}
+	}
 </style>

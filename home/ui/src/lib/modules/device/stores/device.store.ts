@@ -1,6 +1,7 @@
 import { writable } from 'svelte/store';
 import { Device } from '../models/device/Device.model';
 import { io } from 'socket.io-client';
+import type { DeviceState } from '../models/device/DeviceState.model';
 
 export const devices = writable<Array<Device>>([]);
 
@@ -27,8 +28,8 @@ export function toggleDeviceState(device: Device) {
 	putDeviceState(toggledDevice);
 }
 
-export function updateDeviceBrightness(device: Device, brightness: number) {
-	const updatedDevice = device.updateState(brightness);
+export function updateDeviceState(device: Device, newState: DeviceState) {
+	const updatedDevice = device.updateState(newState);
 	putDeviceState(updatedDevice);
 }
 

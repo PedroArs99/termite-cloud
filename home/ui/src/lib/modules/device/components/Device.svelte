@@ -2,8 +2,10 @@
 	import type { Device } from '../models/device/Device.model';
 	import Icon from '$lib/utils/Icon.svelte';
 	import { fade, fly } from 'svelte/transition';
-	import { toggleDeviceState, updateDeviceBrightness } from '../stores/device.store';
+	import { toggleDeviceState, updateDeviceState } from '../stores/device.store';
 	import BrightnessSlider from './BrightnessSlider.svelte';
+	import TemperatureSlider from './TemperatureSlider.svelte';
+	import type { DeviceState } from '../models/device/DeviceState.model';
 
 	export let device: Device;
 
@@ -12,7 +14,21 @@
 	}
 
 	function onBrightnessChange(event: CustomEvent<number>) {
-		updateDeviceBrightness(device, event.detail);
+		const patchedState: DeviceState = {
+			...device.state,
+			brightness: event.detail
+		}
+
+		updateDeviceState(device, patchedState);
+	}
+
+	function onTemperatureChange(event: CustomEvent<number>) {
+		const patchedState: DeviceState = {
+			...device.state,
+			colorTemperature: event.detail
+		}
+
+		updateDeviceState(device, patchedState);
 	}
 
 	$: color = device.state.power === 'ON' ? '#EFC070' : '#333333';
@@ -29,6 +45,7 @@
 			/>
 		</div>
 		<BrightnessSlider value={device.state.brightness} on:change={(e) => onBrightnessChange(e)} />
+		<TemperatureSlider value={device.state.colorTemperature} on:change={(e) => onTemperatureChange(e)} />
 		<h1 class="text-center">{device.friendlyName.replace('_', ' ')}</h1>
 	</div>
 </div>
@@ -40,5 +57,12 @@
 
 	.icon-wrapper {
 		display: contents;
+	}
+
+	@media (min-width: 768px) {
+		.card {
+			max-width: inherit;
+			flex-grow: 1;
+		}
 	}
 </style>
