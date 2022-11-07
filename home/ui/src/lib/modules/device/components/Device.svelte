@@ -31,7 +31,7 @@
 		updateDeviceState(device, patchedState);
 	}
 
-	$: color = device.state.power === 'ON' ? '#EFC070' : '#333333';
+	$: color = device.state.power === 'ON' ? device.state.color : '#333333';
 </script>
 
 <div in:fade out:fly class="card">
