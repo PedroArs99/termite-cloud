@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  termite_cloud:
+      image: ghcr.io/pedroars99/termite-cloud:latest
+      pull_policy: always
+      container_name: termite_cloud
+      environment:
+        - S3_ACCESS_KEY=${S3_ACCESS_KEY}
+        - S3_SECRET_KEY=${S3_SECRET_KEY}
+      env_file:
+        - .env
+      labels:
+        - traefik.enable=true
+        - traefik.http.routers.termite_cloud.entrypoints=web
+        - traefik.http.routers.termite_cloud.rule=Host(`termite.cloud`)
+        - traefik.http.services.termite_cloud.loadbalancer.server.port=3000

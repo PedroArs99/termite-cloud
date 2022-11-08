@@ -1,10 +1,15 @@
 version: '3.8'
-services:
+networks:
+  tc_infrastructure:
+    driver: bridge
 
+services:
   blackbox_exporter:
     image: prom/blackbox-exporter
     container_name: blackbox_exporter
     command: --config.file=/config/blackbox.yml
+    networks:
+      - tc_infrastructure
     restart: always
     volumes:
       - ./prometheus/blackbox.yml:/config/blackbox.yml
@@ -12,6 +17,8 @@ services:
   grafana:
     image: grafana/grafana-oss
     container_name: grafana
+    networks:
+      - tc_infrastructure
     labels:
       - traefik.enable=true
       - traefik.http.routers.grafana.entrypoints=web
@@ -27,6 +34,8 @@ services:
     image: eclipse-mosquitto
     container_name: mosquitto
     command: "mosquitto -c /mosquitto-no-auth.conf"
+    networks:
+      - tc_infrastructure
     labels:
       - traefik.enable=true
       - traefik.tcp.routers.mosquitto.entrypoints=mqtt
@@ -40,6 +49,8 @@ services:
   portainer:
     image: portainer/portainer-ce
     container_name: portainer
+    networks:
+      - tc_infrastructure
     labels:
       - traefik.enable=true
       - traefik.http.routers.portainer.entrypoints=web
@@ -53,6 +64,8 @@ services:
   prometheus:
     image: prom/prometheus
     container_name: prometheus
+    networks:
+      - tc_infrastructure
     labels:
       - traefik.enable=true
       - traefik.http.routers.prometheus.entrypoints=web
@@ -62,24 +75,11 @@ services:
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
 
-  termite_cloud:
-    image: ghcr.io/pedroars99/termite-cloud:latest
-    pull_policy: always
-    container_name: termite_cloud
-    environment:
-      - S3_ACCESS_KEY=${S3_ACCESS_KEY}
-      - S3_SECRET_KEY=${S3_SECRET_KEY}
-    env_file:
-      - .env
-    labels:
-      - traefik.enable=true
-      - traefik.http.routers.termite_cloud.entrypoints=web
-      - traefik.http.routers.termite_cloud.rule=Host(`termite.cloud`)
-      - traefik.http.services.termite_cloud.loadbalancer.server.port=3000
-
   traefik:
     image: traefik
     container_name: traefik
+    networks:
+      - tc_infrastructure
     labels:
       - traefik.enable=true
       - traefik.http.routers.dashboard.entrypoints=web
@@ -92,6 +92,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./traefik/traefik.yaml:/etc/traefik/traefik.yaml
+
 volumes:
   grafana_data:
   mosquitto_data:
