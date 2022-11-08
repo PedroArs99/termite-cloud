@@ -9,13 +9,13 @@
 
     - name: Tear down
       docker_compose:
-        project_src: "{{ src }}/cloud/docker"
+        project_src: "{{ src }}/cloud/docker/{{ profile }}"
         remove_images: all
         state: absent
     
     - name: Launch
       docker_compose:
-        project_src: "{{ src }}/cloud/docker"
+        project_src: "{{ src }}/cloud/docker/{{ profile }}"
         pull: yes
         recreate: always
         state: present
