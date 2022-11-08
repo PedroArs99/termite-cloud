@@ -46,3 +46,14 @@ jobs:
           options: |
               --inventory ../../hosts
               --extra-vars "@variables.yaml"
+      - name: Launch Infrastructure
+        uses: dawidd6/action-ansible-playbook@v2.6.1
+        with:
+          playbook: deploy.yaml
+          directory: ./cloud/ansible/playbooks/deploy
+          key: ${{ secrets.ANSIBLE_SSH_KEY }}
+          options: |
+              --inventory ../../hosts
+              --extra-vars "@variables.yaml"
+              --extra-vars "profile=infrastructure"
+
