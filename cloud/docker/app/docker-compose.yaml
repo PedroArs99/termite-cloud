@@ -1,9 +1,15 @@
 version: '3.8'
+networks:
+  infrastructure_tc_infrastructure:
+    external: true
+
 services:
   termite_cloud:
       image: ghcr.io/pedroars99/termite-cloud:latest
       pull_policy: always
       container_name: termite_cloud
+      networks:
+        - infrastructure_tc_infrastructure
       environment:
         - S3_ACCESS_KEY=${S3_ACCESS_KEY}
         - S3_SECRET_KEY=${S3_SECRET_KEY}
