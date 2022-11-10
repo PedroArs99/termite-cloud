@@ -122,12 +122,3 @@ resource "aws_security_group" "allow_mqtt" {
     Name = "allow_mqtt"
   }
 }
-
-resource "aws_s3_bucket" "tch_storage" {
-  bucket = lower("${var.resourceName}-storage")
-}
-
-resource "aws_s3_bucket_acl" "tch_storage_acl" {
-  bucket = aws_s3_bucket.tch_storage.id
-  acl    = "private"
-}

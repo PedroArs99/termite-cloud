@@ -56,5 +56,3 @@ jobs:
           options: |
               --inventory ../../hosts
               --extra-vars "@variables.yaml"
-              --extra-vars "S3_ACCESS_KEY=${{ secrets.S3_ACCESS_KEY }}"
-              --extra-vars "S3_SECRET_KEY=${{ secrets.S3_SECRET_KEY }}"
