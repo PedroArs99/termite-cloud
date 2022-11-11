@@ -21,8 +21,10 @@ services:
       - tc_infrastructure
     labels:
       - traefik.enable=true
-      - traefik.http.routers.grafana.entrypoints=web
+      - traefik.http.routers.grafana.entrypoints=websecure
       - traefik.http.routers.grafana.rule=Host(`grafana.termite.cloud`)
+      - traefik.http.routers.portainer.tls=true
+      - traefik.http.routers.portainer.tls.certresolver=letsencrypt
       - traefik.http.services.gragana.loadbalancer.server.port=3000
     restart: always
     volumes:
@@ -53,8 +55,10 @@ services:
       - tc_infrastructure
     labels:
       - traefik.enable=true
-      - traefik.http.routers.portainer.entrypoints=web
+      - traefik.http.routers.portainer.entrypoints=websecure
       - traefik.http.routers.portainer.rule=Host(`portainer.termite.cloud`)
+      - traefik.http.routers.portainer.tls=true
+      - traefik.http.routers.portainer.tls.certresolver=letsencrypt
       - traefik.http.services.portainer.loadbalancer.server.port=9000
     restart: always
     volumes:
@@ -68,8 +72,10 @@ services:
       - tc_infrastructure
     labels:
       - traefik.enable=true
-      - traefik.http.routers.prometheus.entrypoints=web
+      - traefik.http.routers.prometheus.entrypoints=websecure
       - traefik.http.routers.prometheus.rule=Host(`prometheus.termite.cloud`)
+      - traefik.http.routers.prometheus.tls=true
+      - traefik.http.routers.prometheus.tls.certresolver=letsencrypt
       - traefik.http.services.prometheus.loadbalancer.server.port=9090
     restart: always
     volumes:

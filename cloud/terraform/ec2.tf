@@ -130,6 +130,7 @@ resource "aws_network_interface" "ec2_nic" {
   security_groups = [
     aws_security_group.allow_ssh.id,
     aws_security_group.allow_http.id,
+    aws_security_group.allow_https.id,
     aws_security_group.allow_mqtt.id
   ]
 
