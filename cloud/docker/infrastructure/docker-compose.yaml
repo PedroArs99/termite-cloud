@@ -100,7 +100,6 @@ services:
     restart: always
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ./traefik/acme.json:/acme.json:rw
       - ./traefik/traefik.yaml:/etc/traefik/traefik.yaml
 
 volumes:

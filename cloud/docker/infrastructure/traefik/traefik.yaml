@@ -5,7 +5,7 @@ certificatesResolvers:
   letsencrypt:
     acme:
       email: pjarenas99@gmail.com
-      storage: acme.json
+      storage: /etc/traefik/acme.json
       tlsChallenge: {}
 
 entryPoints:
