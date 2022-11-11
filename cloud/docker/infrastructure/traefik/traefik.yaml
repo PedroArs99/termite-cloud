@@ -1,11 +1,20 @@
 api:
   dashboard: true
 
+certificatesResolvers:
+  letsencrypt:
+    acme:
+      email: pjarenas99@gmail.com
+      storage: acme.json
+      tlsChallenge: {}
+
 entryPoints:
   mqtt:
     address: :1883
   web:
     address: :80
+  websecure:
+    address: :443
 
 providers:
   docker: 

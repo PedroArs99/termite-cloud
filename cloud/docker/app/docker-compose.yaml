@@ -10,9 +10,6 @@ services:
       container_name: termite_cloud
       networks:
         - infrastructure_tc_infrastructure
-      environment:
-        - S3_ACCESS_KEY=${S3_ACCESS_KEY}
-        - S3_SECRET_KEY=${S3_SECRET_KEY}
       env_file:
         - .env
       labels:
