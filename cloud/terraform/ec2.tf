@@ -19,6 +19,110 @@ resource "aws_key_pair" "ec2_key_pair" {
   public_key = file("./keys/ubuntu@termite.cloud.pub")
 }
 
+resource "aws_security_group" "allow_ssh" {
+  name        = "allow_ssh"
+  description = "Allow SSH inbound traffic"
+  vpc_id      = aws_vpc.tch_vpc.id
+
+  ingress {
+    description = "SSH from VPC"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  tags = {
+    Name = "allow_ssh"
+  }
+}
+
+resource "aws_security_group" "allow_http" {
+  name        = "allow_http"
+  description = "Allow HTTP inbound traffic"
+  vpc_id      = aws_vpc.tch_vpc.id
+
+  ingress {
+    description = "HTTP from VPC"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  tags = {
+    Name = "allow_http"
+  }
+}
+
+resource "aws_security_group" "allow_https" {
+  name        = "allow_https"
+  description = "Allow HTTPS inbound traffic"
+  vpc_id      = aws_vpc.tch_vpc.id
+
+  ingress {
+    description = "HTTP from VPC"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  tags = {
+    Name = "allow_http"
+  }
+}
+
+resource "aws_security_group" "allow_mqtt" {
+  name        = "allow_mqtt"
+  description = "Allow MQTT inbound traffic"
+  vpc_id      = aws_vpc.tch_vpc.id
+
+  ingress {
+    description = "MQTT from VPC"
+    from_port   = 1883
+    to_port     = 1883
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  egress {
+    from_port        = 0
+    to_port          = 0
+    protocol         = "-1"
+    cidr_blocks      = ["0.0.0.0/0"]
+    ipv6_cidr_blocks = ["::/0"]
+  }
+
+  tags = {
+    Name = "allow_mqtt"
+  }
+}
+
 resource "aws_network_interface" "ec2_nic" {
   subnet_id   = aws_subnet.tch_pub_subnet.id
   private_ips = ["10.0.1.4"]
