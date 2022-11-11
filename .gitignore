@@ -1,3 +1,6 @@
+# Traefik
+*/acme.json
+
 # Terraform
 .credentials
 .terraform
