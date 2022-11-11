@@ -11,6 +11,7 @@
       docker_compose:
         project_src: "{{ src }}/cloud/docker/{{ profile }}"
         remove_images: all
+        remove_orphans: yes
         state: absent
     
     - name: Launch
