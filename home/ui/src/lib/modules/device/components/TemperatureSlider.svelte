@@ -20,6 +20,7 @@
 		type="range"
 		min="250"
 		max="454"
+		step="25"
 		{value}
 		class="range range-xs"
 		on:change={(e) => onTemperatureChange(e)}
