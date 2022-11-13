@@ -1,0 +1,82 @@
+{
+    "id": 1,
+    "uid": "cU7gzuD4k",
+    "orgID": 1,
+    "folderUID": "jbiRzXv4z",
+    "ruleGroup": "Service Down",
+    "title": "Termite Cloud is down",
+    "condition": "B",
+    "data": [
+        {
+            "refId": "A",
+            "queryType": "",
+            "relativeTimeRange": {
+                "from": 300,
+                "to": 0
+            },
+            "datasourceUid": "PBFA97CFB590B2093",
+            "model": {
+                "editorMode": "builder",
+                "expr": "probe_success{instance=\"http://termite.cloud/api/status/health\"}",
+                "hide": false,
+                "intervalMs": 1000,
+                "legendFormat": "__auto",
+                "maxDataPoints": 43200,
+                "range": true,
+                "refId": "A"
+            }
+        },
+        {
+            "refId": "B",
+            "queryType": "",
+            "relativeTimeRange": {
+                "from": 300,
+                "to": 0
+            },
+            "datasourceUid": "-100",
+            "model": {
+                "conditions": [
+                    {
+                        "evaluator": {
+                            "params": [
+                                1
+                            ],
+                            "type": "lt"
+                        },
+                        "operator": {
+                            "type": "and"
+                        },
+                        "query": {
+                            "params": [
+                                "A"
+                            ]
+                        },
+                        "reducer": {
+                            "params": [],
+                            "type": "last"
+                        },
+                        "type": "query"
+                    }
+                ],
+                "datasource": {
+                    "type": "__expr__",
+                    "uid": "-100"
+                },
+                "expression": "A",
+                "hide": false,
+                "intervalMs": 1000,
+                "maxDataPoints": 43200,
+                "refId": "B",
+                "type": "classic_conditions"
+            }
+        }
+    ],
+    "updated": "2022-11-13T10:32:10Z",
+    "noDataState": "NoData",
+    "execErrState": "Error",
+    "for": "5m",
+    "annotations": {
+        "description": "Termite Cloud is down",
+        "summary": "Termite Cloud is down"
+    }
+}
