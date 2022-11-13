@@ -1,0 +1,11 @@
+{
+    "uid": "eDJZWXvVz",
+    "name": "Email",
+    "type": "email",
+    "settings": {
+        "addresses": "pedroars99@icloud.com",
+        "singleEmail": false,
+        "subject": "Termite Cloud App is Down"
+    },
+    "disableResolveMessage": false
+}
