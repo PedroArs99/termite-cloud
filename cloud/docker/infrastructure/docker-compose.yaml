@@ -17,6 +17,10 @@ services:
   grafana:
     image: grafana/grafana-oss
     container_name: grafana
+    environment:
+      - GF_SMTP_USER=${GF_SMTP_USER}
+      - GF_SMTP_PASSWORD=${GF_SMTP_PASSWORD}
+    env_file: .env
     networks:
       - tc_infrastructure
     labels:

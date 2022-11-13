@@ -20,4 +20,7 @@
         pull: yes
         recreate: always
         state: present
+      environment:
+        GF_SMTP_USER: "{{ GF_SMTP_USER }}"
+        GF_SMTP_PASSWORD: "{{ GF_SMTP_PASSWORD }}"
 

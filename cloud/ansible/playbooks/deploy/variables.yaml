@@ -3,3 +3,6 @@ profile: app
 repo: https://github.com/PedroArs99/termite-cloud.git
 src: ~/termite-cloud
 username: ubuntu
+
+GF_SMTP_USER: <GF_SMTP_USER>
+GF_SMTP_PASSWORD: <GF_SMTP_PASSWORD>
