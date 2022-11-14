@@ -1,5 +1,6 @@
 import { DeviceState } from 'src/modules/device/models/Device-State.model';
 import * as ColorConverter from 'cie-rgb-color-converter';
+import { Logger } from '@nestjs/common';
 
 export interface DeviceStateDto {
   brightness: number;
@@ -48,6 +49,7 @@ function rgbToHex({ r, g, b }: any): string {
 
 function hexToRgb(hex: string): { r: number; g: number; b: number } {
   var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  Logger.error(`Parsing ${hex} to rgg with regex: ${result.toString()}`)
   return {
     r: parseInt(result[1], 16),
     g: parseInt(result[2], 16),
