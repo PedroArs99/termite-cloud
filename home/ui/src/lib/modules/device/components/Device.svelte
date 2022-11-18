@@ -38,7 +38,7 @@
 	<div class="card-body">
 		<div class="icon-wrapper" on:click={() => onDeviceClick()}>
 			<Icon
-				clazz="border rounded-full p-3 hover:cursor-pointer hover:bg-primary"
+				clazz="border rounded-full p-3 lg:hover:cursor-pointer lg:hover:bg-primary"
 				icon="lightbulb"
 				size="5x"
 				{color}
