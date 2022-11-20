@@ -1,7 +1,6 @@
 <script lang="ts">
 	import type { Device } from '../models/device/Device.model';
 	import Icon from '$lib/utils/Icon.svelte';
-	import { fade, fly } from 'svelte/transition';
 	import { toggleDeviceState, updateDeviceState } from '../stores/device.store';
 	import BrightnessSlider from './BrightnessSlider.svelte';
 	import TemperatureSlider from './TemperatureSlider.svelte';
@@ -17,7 +16,7 @@
 		const patchedState: DeviceState = {
 			...device.state,
 			brightness: event.detail
-		}
+		};
 
 		updateDeviceState(device, patchedState);
 	}
@@ -26,7 +25,7 @@
 		const patchedState: DeviceState = {
 			...device.state,
 			colorTemperature: event.detail
-		}
+		};
 
 		updateDeviceState(device, patchedState);
 	}
@@ -34,7 +33,7 @@
 	$: color = device.state.power === 'ON' ? device.state.color : '#333333';
 </script>
 
-<div in:fade out:fly class="card">
+<div class="card">
 	<div class="card-body">
 		<div class="icon-wrapper" on:click={() => onDeviceClick()}>
 			<Icon
@@ -45,7 +44,10 @@
 			/>
 		</div>
 		<BrightnessSlider value={device.state.brightness} on:change={(e) => onBrightnessChange(e)} />
-		<TemperatureSlider value={device.state.colorTemperature} on:change={(e) => onTemperatureChange(e)} />
+		<TemperatureSlider
+			value={device.state.colorTemperature}
+			on:change={(e) => onTemperatureChange(e)}
+		/>
 		<h1 class="text-center">{device.friendlyName.replace('_', ' ')}</h1>
 	</div>
 </div>

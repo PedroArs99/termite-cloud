@@ -1,12 +1,13 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { scale } from 'svelte/transition';
 	import { devices, fetchDevices } from '../stores/device.store';
 	import Device from './Device.svelte';
 
 	onMount(() => fetchDevices());
 </script>
 
-<div id="device-list">
+<div in:scale id="device-list">
 	{#each $devices as device}
 		<Device {device} />
 	{/each}

@@ -1,11 +1,12 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { scale } from 'svelte/transition';
 	import { fetchHomeConfig, homeConfig } from '../HomeConfig.store';
 
 	onMount(fetchHomeConfig);
 </script>
 
-<div class="card">
+<div in:scale class="card">
 	<div class="card-body">
 		<div class="property-wrapper">
 			<span>Bridge state</span>
