@@ -14,7 +14,7 @@
 	}
 </script>
 
-<div class="flex gap-1 my-3">
+<div class="flex w-full grow gap-1 py-3">
 	<Icon icon="cold" size="md"/>
 	<input
 		type="range"

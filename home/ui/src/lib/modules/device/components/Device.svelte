@@ -34,6 +34,7 @@
 </script>
 
 <div class="card">
+	<h1 class="card-title">{device.friendlyName.replace('_', ' ')}</h1>
 	<div class="card-body">
 		<div class="icon-wrapper" on:click={() => onDeviceClick()}>
 			<Icon
@@ -43,18 +44,31 @@
 				{color}
 			/>
 		</div>
-		<BrightnessSlider value={device.state.brightness} on:change={(e) => onBrightnessChange(e)} />
-		<TemperatureSlider
-			value={device.state.colorTemperature}
-			on:change={(e) => onTemperatureChange(e)}
-		/>
-		<h1 class="text-center">{device.friendlyName.replace('_', ' ')}</h1>
+		<div class="card-actions">
+			<BrightnessSlider value={device.state.brightness} on:change={(e) => onBrightnessChange(e)} />
+			<TemperatureSlider
+				value={device.state.colorTemperature}
+				on:change={(e) => onTemperatureChange(e)}
+			/>
+		</div>
 	</div>
 </div>
 
 <style lang="scss">
 	.card {
 		max-width: 25rem;
+	}
+
+	.card-body {
+		display: flex;
+		gap: 1em;
+		padding: 1rem;
+		flex-direction: row;
+	}
+
+	.card-title {
+		justify-content: center;
+		padding: 0.5rem;
 	}
 
 	.icon-wrapper {
@@ -65,6 +79,15 @@
 		.card {
 			max-width: inherit;
 			flex-grow: 1;
+		}
+
+		.card-body {
+			flex-direction: column;
+		}
+
+		.card-actions {
+			display: flex;
+			flex-direction: column;
 		}
 	}
 </style>
