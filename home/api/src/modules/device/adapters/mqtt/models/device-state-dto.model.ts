@@ -49,7 +49,7 @@ function rgbToHex({ r, g, b }: any): string {
 
 function hexToRgb(hex: string): { r: number; g: number; b: number } {
   try {
-    let result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    let result = /^#?([a-f\d]{1,2})([a-f\d]{1,2})([a-f\d]{1,2})$/i.exec(hex);
 
     return {
       r: parseInt(result[1], 16),
