@@ -1,7 +1,15 @@
+<script>
+	import Icon from "$lib/utils/Icon.svelte";
+</script>
 <div class="navbar">
-	<div class="navbar-center">
-		<a href="/" class="btn btn-ghost normal-case text-xl">
-			<img src="/favicon.png" alt="Termite Home Logo" width="64px">
+	<div>
+		<a href="/">
+			<img src="/favicon.png" alt="Termite Home Logo" width="64px" />
+		</a>
+	</div>
+	<div>
+		<a href="/config" class="btn btn-ghost">
+			<Icon icon="cogs" size="2x" />
 		</a>
 	</div>
 </div>
@@ -10,7 +18,7 @@
 	.navbar {
 		width: inherit;
 		display: flex;
-		justify-content: center;
+		justify-content: space-between;
 
 		@apply m-3 border border-accent rounded-2xl shadow-2xl;
 	}
