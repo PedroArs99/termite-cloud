@@ -2,6 +2,7 @@
 	import Fa from 'svelte-fa';
 	import {
 		faCogs,
+		faHouseSignal,
 		faLightbulb,
 		faSun,
 		faTemperatureHigh,
@@ -11,13 +12,14 @@
 
 	export let clazz: string = '';
 	export let color: string | undefined = undefined;
-	export let icon: 'circle' | 'cogs' | 'cold' | 'lightbulb' | 'sun' | 'warm';
+	export let icon: 'circle' | 'cogs' | 'cold' | 'home' | 'lightbulb' | 'sun' | 'warm';
 	export let size: string = 'lg';
 
 	let icons = {
 		circle: faCircle,
 		cogs: faCogs,
 		cold: faTemperatureLow,
+		home: faHouseSignal,
 		lightbulb: faLightbulb,
 		sun: faSun,
 		warm: faTemperatureHigh

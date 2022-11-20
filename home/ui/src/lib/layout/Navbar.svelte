@@ -8,7 +8,10 @@
 		</a>
 	</div>
 	<div>
-		<a href="/config" class="btn btn-ghost">
+		<a href="/" class="navbar-link">
+			<Icon icon="home" size="2x" />
+		</a>
+		<a href="/config" class="navbar-link">
 			<Icon icon="cogs" size="2x" />
 		</a>
 	</div>
@@ -21,5 +24,9 @@
 		justify-content: space-between;
 
 		@apply m-3 border border-accent rounded-2xl shadow-2xl;
+	}
+
+	.navbar-link {
+		@apply btn btn-ghost;
 	}
 </style>

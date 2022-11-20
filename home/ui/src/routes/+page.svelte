@@ -8,5 +8,4 @@
 	<meta name="description" content="Termite Cloud App - Home Control" />
 </svelte:head>
 
-<Config />
 <Devices />
