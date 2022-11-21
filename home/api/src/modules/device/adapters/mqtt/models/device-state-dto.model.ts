@@ -10,11 +10,19 @@ export interface DeviceStateDto {
 }
 
 export function deviceStateToDomain(dto: DeviceStateDto): DeviceState {
-  const rgb: { r: number; g: number; b: number } = ColorConverter.xyBriToRgb(
+  let rgb: { r: number; g: number; b: number } = ColorConverter.xyBriToRgb(
     dto.color.x,
     dto.color.y,
     dto.brightness,
   );
+
+  // Correct values bigger than 255 (Library fault)
+  rgb = {
+    r: rgb.r <= 255 ? rgb.r : 0,
+    g: rgb.g <= 255 ? rgb.g : 0,
+    b: rgb.b <= 255 ? rgb.b : 0,
+  };
+
   const hex = rgbToHex(rgb);
 
   return DeviceState.create(dto.state, dto.brightness, dto.color_temp, hex);
@@ -38,11 +46,14 @@ export function deviceStateDtoFromDomain(
 }
 
 function valueToHex(c: number): string {
-  return c.toString(16);
+  const value = c.toString(16);
+
+  return value.length === 1 ? 0 + value : value;
 }
 
 function rgbToHex({ r, g, b }: any): string {
   const value = valueToHex(r) + valueToHex(g) + valueToHex(b);
+  Logger.debug(`Casting from rgb(${r},${g},${b}) to Hex as ${value}`);
 
   return `#${value.toUpperCase()}`;
 }
