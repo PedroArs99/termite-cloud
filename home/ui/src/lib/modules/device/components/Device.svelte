@@ -5,6 +5,7 @@
 	import BrightnessSlider from './BrightnessSlider.svelte';
 	import TemperatureSlider from './TemperatureSlider.svelte';
 	import type { DeviceState } from '../models/device/DeviceState.model';
+	import ColorPicker from './ColorPicker.svelte';
 
 	export let device: Device;
 
@@ -50,6 +51,7 @@
 				value={device.state.colorTemperature}
 				on:change={(e) => onTemperatureChange(e)}
 			/>
+			<ColorPicker />
 		</div>
 	</div>
 </div>
