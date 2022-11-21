@@ -19,8 +19,8 @@
 	<input
 		type="range"
 		min="0"
-		max="254"
-		step="25"
+		max="255"
+		step="15"
 		{value}
 		class="range range-xs"
 		on:change={(e) => onBrightnessChange(e)}

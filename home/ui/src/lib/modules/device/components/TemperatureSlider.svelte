@@ -19,8 +19,8 @@
 	<input
 		type="range"
 		min="250"
-		max="454"
-		step="25"
+		max="455"
+		step="15"
 		{value}
 		class="range range-xs"
 		on:change={(e) => onTemperatureChange(e)}
