@@ -31,6 +31,17 @@
 		updateDeviceState(device, patchedState);
 	}
 
+	function onColorChange(event: CustomEvent<string>) {
+		console.log(event);
+
+		const patchedState: DeviceState = {
+			...device.state,
+			color: event.detail
+		};
+
+		updateDeviceState(device, patchedState);
+	}
+
 	$: color = device.state.power === 'ON' ? device.state.color : '#333333';
 </script>
 
@@ -51,7 +62,7 @@
 				value={device.state.colorTemperature}
 				on:change={(e) => onTemperatureChange(e)}
 			/>
-			<ColorPicker />
+			<ColorPicker on:change={(e) => onColorChange(e)} />
 		</div>
 	</div>
 </div>
