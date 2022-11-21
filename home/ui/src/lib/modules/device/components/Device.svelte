@@ -25,6 +25,7 @@
 	function onTemperatureChange(event: CustomEvent<number>) {
 		const patchedState: DeviceState = {
 			...device.state,
+			colorMode: 'color_temp',
 			colorTemperature: event.detail
 		};
 
@@ -32,11 +33,10 @@
 	}
 
 	function onColorChange(event: CustomEvent<string>) {
-		console.log(event);
-
 		const patchedState: DeviceState = {
 			...device.state,
-			color: event.detail
+			color: event.detail,
+			colorMode: 'xy',
 		};
 
 		updateDeviceState(device, patchedState);

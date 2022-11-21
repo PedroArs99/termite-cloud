@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { DeviceService } from '../../application/ports/DeviceService.port';
 import { ConfigService } from '@nestjs/config';
 import { connectAsync } from 'async-mqtt';
@@ -8,6 +8,8 @@ import { deviceStateDtoFromDomain } from './models/device-state-dto.model';
 
 @Injectable()
 export class DeviceServiceImpl implements DeviceService {
+  private logger = new Logger(DeviceServiceImpl.name);
+
   constructor(private configService: ConfigService) {}
 
   async refreshState(friendlyName: string): Promise<void> {
@@ -20,6 +22,18 @@ export class DeviceServiceImpl implements DeviceService {
     const mqttClient = await this.connectClient();
 
     const deviceStateDto = deviceStateDtoFromDomain(device.state);
+
+    if (deviceStateDto.color_mode === 'color_temp') {
+      delete deviceStateDto.color;
+    } else {
+      delete deviceStateDto.color_temp;
+    }
+
+    this.logger.log(
+      `Publishing new device state for ${device.friendlyName}: ${JSON.stringify(
+        deviceStateDto,
+      )}`,
+    );
     mqttClient.publish(
       `zigbee2mqtt/${device.friendlyName}/set`,
       JSON.stringify(deviceStateDto),
