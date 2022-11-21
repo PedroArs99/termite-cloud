@@ -5,8 +5,9 @@ import { Logger } from '@nestjs/common';
 export interface DeviceStateDto {
   brightness: number;
   state: 'ON' | 'OFF';
-  color_temp: number;
   color: { x: number; y: number };
+  color_mode: 'xy' | 'color_temp';
+  color_temp: number;
 }
 
 export function deviceStateToDomain(dto: DeviceStateDto): DeviceState {
@@ -25,7 +26,7 @@ export function deviceStateToDomain(dto: DeviceStateDto): DeviceState {
 
   const hex = rgbToHex(rgb);
 
-  return DeviceState.create(dto.state, dto.brightness, dto.color_temp, hex);
+  return DeviceState.create(dto.state, dto.brightness, hex, dto.color_mode, dto.color_temp);
 }
 
 export function deviceStateDtoFromDomain(
@@ -37,11 +38,12 @@ export function deviceStateDtoFromDomain(
   return {
     state: deviceState.power,
     brightness: deviceState.brightness,
-    color_temp: deviceState.colorTemperature,
     color: {
       x,
       y,
     },
+    color_mode: deviceState.colorMode,
+    color_temp: deviceState.colorTemperature,
   };
 }
 
