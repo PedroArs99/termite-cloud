@@ -1,14 +1,23 @@
 export class HomeConfig {
-  private constructor(readonly bridgeState: 'online' | 'offline') {}
+  private constructor(
+    readonly bridgeState: 'online' | 'offline',
+    readonly permitJoin: boolean,
+    readonly permitJoinTimeout: number,
+  ) {}
 
-  updateBridgeState(bridgeState: "online" | "offline"): HomeConfig {
-    return {
-      ...this,
-      bridgeState
-    }
+  updateBridgeState(bridgeState: 'online' | 'offline'): HomeConfig {
+    return new HomeConfig(bridgeState, this.permitJoin, this.permitJoinTimeout);
   }
 
-  static create(bridgeState: "online" | "offline"): HomeConfig{
-    return new HomeConfig(bridgeState);
+  updateBridgeInfo(permitJoin: boolean, permitJoinTimeout: number): HomeConfig {
+    return new HomeConfig(this.bridgeState, permitJoin, permitJoinTimeout);
+  }
+
+  static create(
+    bridgeState: 'online' | 'offline',
+    permitJoin: boolean,
+    permitJoinTimeout: number,
+  ): HomeConfig {
+    return new HomeConfig(bridgeState, permitJoin, permitJoinTimeout);
   }
 }

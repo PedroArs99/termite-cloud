@@ -1,11 +1,15 @@
-import { HomeConfig } from "../../../models/HomeConfig.model";
+import { HomeConfig } from '../../../models/HomeConfig.model';
 
 export class HomeConfigRestDto {
-    bridgeState: "online" | "offline";
+  bridgeState: 'online' | 'offline';
+  permitJoin: boolean;
+  permitJoinTimeout: number;
 
-    static fromDomain(homeConfig: HomeConfig){
-        return {
-            bridgeState: homeConfig.bridgeState
-        }
-    }
+  static fromDomain(homeConfig: HomeConfig): HomeConfigRestDto {
+    return {
+      bridgeState: homeConfig.bridgeState,
+      permitJoin: homeConfig.permitJoin,
+      permitJoinTimeout: homeConfig.permitJoinTimeout,
+    };
+  }
 }

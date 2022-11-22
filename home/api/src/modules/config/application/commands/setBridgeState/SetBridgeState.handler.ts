@@ -9,7 +9,7 @@ export class SetBridgeStateHandler implements ICommandHandler<SetBridgeStateComm
   constructor(@Inject("HomeConfigRepository") private repository: HomeConfigRepository) {}
 
     async execute(command: SetBridgeStateCommand): Promise<HomeConfig> {
-    const config = HomeConfig.create(command.bridgeState)
+    const config = HomeConfig.create(command.bridgeState, false, 0)
     this.repository.save(config)
 
     return config

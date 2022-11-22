@@ -1,21 +1,20 @@
-import { Injectable } from "@nestjs/common";
-import { HomeConfig } from "../../models/HomeConfig.model";
-import { HomeConfigRepository } from "../../application/ports/HomeConfigRepository.port";
+import { Injectable } from '@nestjs/common';
+import { HomeConfig } from '../../models/HomeConfig.model';
+import { HomeConfigRepository } from '../../application/ports/HomeConfigRepository.port';
 
 @Injectable()
 export class InMemoryHomeConfigRepository implements HomeConfigRepository {
-    private homeConfig: HomeConfig;
+  private homeConfig: HomeConfig;
 
-    constructor(){
-        this.homeConfig = HomeConfig.create("offline");
-    }
+  constructor() {
+    this.homeConfig = HomeConfig.create('offline', false, 0);
+  }
 
-    get(): HomeConfig {
-        return this.homeConfig
-    }
+  get(): HomeConfig {
+    return this.homeConfig;
+  }
 
-    save(homeConfig: HomeConfig): void {
-        this.homeConfig = homeConfig
-    }
-    
+  save(homeConfig: HomeConfig): void {
+    this.homeConfig = homeConfig;
+  }
 }
