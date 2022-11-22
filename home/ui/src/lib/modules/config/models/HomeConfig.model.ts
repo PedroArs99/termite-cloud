@@ -1,3 +1,4 @@
 export interface HomeConfig {
-    bridgeState: "online" | "offline"
+    bridgeState: "online" | "offline";
+    permitJoin: boolean;
 }

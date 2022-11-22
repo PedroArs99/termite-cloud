@@ -16,11 +16,19 @@
 				<div class="badge badge-error badge-outline">Offline</div>
 			{/if}
 		</div>
+		<div class="property-wrapper">
+			<span>Permit Join</span>
+			<input type="checkbox" class={$homeConfig.permitJoin ? 'toggle-success' : 'toggle-error'} checked="{$homeConfig.permitJoin}" />
+		</div>
 	</div>
 </div>
 
-<style class="postcss">
+<style class="scss">
 	.property-wrapper {
 		@apply flex justify-between;
+	}
+
+	.toggle-error, .toggle-success {
+		@apply toggle;
 	}
 </style>
