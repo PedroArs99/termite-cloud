@@ -1,12 +1,14 @@
 import { Inject } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { HomeConfig } from 'src/modules/config/models/HomeConfig.model';
+import { BridgeInfoUpdatedEvent } from 'src/modules/config/models/HomeConfigUpdated.event';
 import { HomeConfigRepository } from '../../ports/HomeConfigRepository.port';
 
 export class UpdateBridgeInfoCommand {
   constructor(
     readonly permitJoin: boolean,
     readonly permitJoinTimeout: number,
+    readonly publishNewState: boolean = false
   ) {}
 }
 
@@ -22,6 +24,10 @@ export class UpdateBridgeInfoCommandHandler
   async execute(command: UpdateBridgeInfoCommand): Promise<HomeConfig> {
     let config = this.configRepo.get();
     const updatedConfig = config.updateBridgeInfo(command.permitJoin, command.permitJoinTimeout);
+
+    if(command.publishNewState){
+      config.addEvent(new BridgeInfoUpdatedEvent(config))
+    }
 
     this.configRepo.save(updatedConfig);
 
