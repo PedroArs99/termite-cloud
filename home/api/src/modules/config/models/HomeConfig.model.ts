@@ -4,24 +4,22 @@ export class HomeConfig extends DomainObject {
   private constructor(
     readonly bridgeState: 'online' | 'offline',
     readonly permitJoin: boolean,
-    readonly permitJoinTimeout: number,
   ) {
     super()
   }
 
   updateBridgeState(bridgeState: 'online' | 'offline'): HomeConfig {
-    return new HomeConfig(bridgeState, this.permitJoin, this.permitJoinTimeout);
+    return new HomeConfig(bridgeState, this.permitJoin);
   }
 
-  updateBridgeInfo(permitJoin: boolean, permitJoinTimeout: number): HomeConfig {
-    return new HomeConfig(this.bridgeState, permitJoin, permitJoinTimeout);
+  updateBridgeInfo(permitJoin: boolean): HomeConfig {
+    return new HomeConfig(this.bridgeState, permitJoin);
   }
 
   static create(
     bridgeState: 'online' | 'offline',
     permitJoin: boolean,
-    permitJoinTimeout: number,
   ): HomeConfig {
-    return new HomeConfig(bridgeState, permitJoin, permitJoinTimeout);
+    return new HomeConfig(bridgeState, permitJoin);
   }
 }

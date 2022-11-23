@@ -7,7 +7,6 @@ import { HomeConfigRepository } from '../../ports/HomeConfigRepository.port';
 export class UpdateBridgeInfoCommand {
   constructor(
     readonly permitJoin: boolean,
-    readonly permitJoinTimeout: number,
     readonly publishNewState: boolean = false
   ) {}
 }
@@ -23,10 +22,10 @@ export class UpdateBridgeInfoCommandHandler
 
   async execute(command: UpdateBridgeInfoCommand): Promise<HomeConfig> {
     let config = this.configRepo.get();
-    const updatedConfig = config.updateBridgeInfo(command.permitJoin, command.permitJoinTimeout);
+    const updatedConfig = config.updateBridgeInfo(command.permitJoin);
 
     if(command.publishNewState){
-      config.addEvent(new BridgeInfoUpdatedEvent(config))
+      updatedConfig.addEvent(new BridgeInfoUpdatedEvent(updatedConfig))
     }
 
     this.configRepo.save(updatedConfig);

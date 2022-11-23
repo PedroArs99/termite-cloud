@@ -1,27 +1,31 @@
-import { Controller, Logger } from '@nestjs/common';
+import { Controller, Inject, Logger } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
+import { OnEvent } from '@nestjs/event-emitter';
 import { MessagePattern, Payload } from '@nestjs/microservices';
 import { SetBridgeStateCommand } from '../../application/commands/setBridgeState/SetBridgeState.command';
 import { UpdateBridgeInfoCommand } from '../../application/commands/updateBridgeInfo/UpdateBridgeInfo.command';
+import { HomeConfigService } from '../../application/ports/HomeConfigService.port';
+import { BridgeInfoUpdatedEvent } from '../../models/HomeConfigUpdated.event';
 
 @Controller()
 export class HomeConfigMqttController {
   private readonly logger = new Logger(HomeConfigMqttController.name);
 
-  constructor(private commandBus: CommandBus) {}
+  constructor(
+    private commandBus: CommandBus,
+    @Inject('HomeConfigService') private homeConfigService: HomeConfigService,
+  ) {}
 
   @MessagePattern('zigbee2mqtt/bridge/info')
   updateBridgeInfo(@Payload() bridgeInfo: any) {
     const permitJoin = bridgeInfo['permit_join'];
-    const permitJoinTimeout = bridgeInfo['permit_join_timeout'];
 
     this.logger.log(
-      `Bridge Info received: Permit Join[${permitJoin}], Permit Join Timeout[${permitJoinTimeout}]`,
+      `Bridge Info received: Permit Join[${permitJoin}]`,
     );
 
     const command = new UpdateBridgeInfoCommand(
       permitJoin,
-      permitJoinTimeout ? permitJoinTimeout : 0,
     );
 
     this.commandBus.execute(command);
@@ -37,5 +41,10 @@ export class HomeConfigMqttController {
 
     let command = new SetBridgeStateCommand(state);
     this.commandBus.execute(command);
+  }
+
+  @OnEvent('bridgeInfoUpdated')
+  updateDeviceMqttContext(event: BridgeInfoUpdatedEvent): void {
+    this.homeConfigService.publishHomeConfig(event.config);
   }
 }

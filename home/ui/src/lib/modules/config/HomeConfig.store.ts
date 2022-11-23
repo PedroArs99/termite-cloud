@@ -4,7 +4,6 @@ import type { HomeConfig } from './models/HomeConfig.model';
 const initialState: HomeConfig = {
 	bridgeState: 'offline',
 	permitJoin: false,
-	permitJoinTimeout: 0
 };
 
 export const homeConfig = writable(initialState);
