@@ -1,9 +1,9 @@
-import { writable } from 'svelte/store';
+import { derived, get, writable } from 'svelte/store';
 import type { HomeConfig } from './models/HomeConfig.model';
 
 const initialState: HomeConfig = {
 	bridgeState: 'offline',
-	permitJoin: false,
+	permitJoin: false
 };
 
 export const homeConfig = writable(initialState);
@@ -16,12 +16,18 @@ export function fetchHomeConfig() {
 }
 
 export function togglePermitJoin() {
-	fetch(`/api/config/permitJoin`, {
+	const currentState = get(homeConfig);
+	console.log('State Before: ', currentState);
+
+	fetch(`/api/config`, {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json'
-		}
+		},
+		body: JSON.stringify({
+			permitJoin: !get(homeConfig).permitJoin
+		})
 	})
 		.then((response) => response.json())
-		.catch((error) => console.error(error));
+		.then((config: HomeConfig) => homeConfig.set(config));		
 }

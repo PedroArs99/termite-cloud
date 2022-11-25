@@ -19,7 +19,7 @@ export class HomeConfigRestController {
   }
 
   @Put()
-  async togglePermitJoin(@Body() homeConfigDto: UpdateHomeConfigDto): Promise<HomeConfigRestDto> {
+  async togglePermitJoin(@Body() homeConfigDto: UpdateHomeConfigDto): Promise<HomeConfigRestDto> {    
     const homeConfig: HomeConfig = await this.commandBus.execute(
       new UpdateBridgeInfoCommand(homeConfigDto.permitJoin, true),
     );

@@ -30,6 +30,6 @@ export class UpdateBridgeInfoCommandHandler
 
     this.configRepo.save(updatedConfig);
 
-    return config;
+    return updatedConfig;
   }
 }
