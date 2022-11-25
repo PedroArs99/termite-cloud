@@ -1,9 +1,10 @@
-import { Controller, Get, Put } from '@nestjs/common';
+import { Body, Controller, Get, Put } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { UpdateBridgeInfoCommand } from '../../application/commands/updateBridgeInfo/UpdateBridgeInfo.command';
 import { GetHomeConfigQuery } from '../../application/queries/getHomeConfig/GetHomeConfig.query';
 import { HomeConfig } from '../../models/HomeConfig.model';
 import { HomeConfigRestDto } from './models/HomeConfigRestDto.model';
+import { UpdateHomeConfigDto } from './models/UpdateHomeConfig.dto';
 
 @Controller('/config')
 export class HomeConfigRestController {
@@ -17,10 +18,10 @@ export class HomeConfigRestController {
     return HomeConfigRestDto.fromDomain(homeConfig);
   }
 
-  @Put('/permitJoin')
-  async togglePermitJoin(): Promise<HomeConfigRestDto> {
+  @Put()
+  async togglePermitJoin(@Body() homeConfigDto: UpdateHomeConfigDto): Promise<HomeConfigRestDto> {
     const homeConfig: HomeConfig = await this.commandBus.execute(
-      new UpdateBridgeInfoCommand(true, 0, true),
+      new UpdateBridgeInfoCommand(homeConfigDto.permitJoin, true),
     );
     return HomeConfigRestDto.fromDomain(homeConfig);
   }
