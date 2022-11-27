@@ -1,5 +1,4 @@
 <script lang="ts">
-	import Config from '$lib/modules/config/components/Config.svelte';
 	import Devices from '$lib/modules/device/components/Devices.svelte';
 </script>
 
