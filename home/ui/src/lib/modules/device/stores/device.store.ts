@@ -1,46 +1,12 @@
 import { writable } from 'svelte/store';
-import { Device } from '../models/device/Device.model';
-import { io } from 'socket.io-client';
-import type { DeviceState } from '../models/device/DeviceState.model';
+import type { Device } from '../models/device/Device.model';
 
-export const devices = writable<Array<Device>>([]);
+function storeFactory() {
+	const {subscribe, set, update} = writable<Device[]>();
 
-// Actions
-export function fetchDevices() {
-	fetch('/api/devices')
-		.then((response) => response.json())
-		.then((response) =>
-			response.map((object: Device) => new Device(object.friendlyName, object.state))
-		)
-		.then((response) => devices.set(response))
-		.then((_) => initWebSockets())
-		.catch((error) => console.error(error));
-}
+	return {
+		subscribe,
+	}
+} 
 
-function initWebSockets() {
-	const socket = io('/events/devices');
-
-	socket.on('deviceUpserted', () => fetchDevices());
-}
-
-export function toggleDeviceState(device: Device) {
-	const toggledDevice = device.toggleDeviceState();
-	putDeviceState(toggledDevice);
-}
-
-export function updateDeviceState(device: Device, newState: DeviceState) {
-	const updatedDevice = device.updateState(newState);
-	putDeviceState(updatedDevice);
-}
-
-function putDeviceState(device: Device) {
-	fetch(`/api/devices/${device.friendlyName}`, {
-		method: 'PUT',
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: JSON.stringify(device.state)
-	})
-		.then((response) => response.json())
-		.catch((error) => console.error(error));
-}
+export const devices = storeFactory();
