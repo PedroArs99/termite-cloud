@@ -17,5 +17,6 @@
 	#device-list {
 		display: flex;
 		flex-wrap: wrap;
+		align-items: flex-start;
 	}
 </style>

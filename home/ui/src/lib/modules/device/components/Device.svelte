@@ -1,29 +1,40 @@
 <script lang="ts">
 	import type { Device } from '../models/Device.model';
 	import BrightnessSlider from './lights/BrightnessSlider.svelte';
-	import ColorPicker from './ColorPicker.svelte';
-	import TemperatureSlider from './TemperatureSlider.svelte';
+	import ColorPicker from './lights/ColorPicker.svelte';
+	import PowerButton from './lights/PowerButton.svelte';
+	import TemperatureSlider from './lights/TemperatureSlider.svelte';
 
 	export let device: Device;
+	console.log(device.features);
 </script>
 
 <div class="card">
 	<h1 class="card-title">{device.friendlyName.replace('_', ' ')}</h1>
-	{#each Object.keys(device.features) as feature}
-		{#if feature === 'brightness'}
-			<BrightnessSlider value={device.state?.['brightness']} />
-		{/if}
-		{#if feature === 'color_temp'}
-			<TemperatureSlider value={device.state?.['color_temp']}/>
-		{/if}
-		{#if feature === 'color_xy'}
-			<ColorPicker />
-		{/if}
-	{/each}
+	<div class="card-body">
+		{#each Object.keys(device.features) as feature}
+			{#if feature === 'state'}
+				<PowerButton />
+			{/if}
+			{#if feature === 'brightness'}
+				<BrightnessSlider value={device.state?.['brightness']} />
+			{/if}
+			{#if feature === 'color_temp'}
+				<TemperatureSlider value={device.state?.['color_temp']} />
+			{/if}
+			{#if feature === 'color_xy'}
+				<ColorPicker />
+			{/if}
+		{/each}
+	</div>
 </div>
 
 <style lang="scss">
 	.card {
+		padding: 1em;
+	}
+
+	.card-body {
 		padding: 1em;
 	}
 

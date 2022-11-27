@@ -23,9 +23,10 @@ export function normalizeDefinition(
   
   flatennedCapabilities.forEach((capability) => {
     switch (capability.type) {
+      case 'binary':
+      case 'composite':
       case 'enum':
       case 'numeric':
-      case 'composite':
         features[capability.name] = capability.property;
         break;
       default:
@@ -53,6 +54,8 @@ function flattenCapabilities(capabilities: ExposeDto[]): ExposeDto[] {
 
 function flattenCapability(capability: ExposeDto): ExposeDto | ExposeDto[] {
   switch (capability.type) {
+    case 'binary':
+    case 'composite':
     case 'enum':
     case 'numeric':
       return capability;
