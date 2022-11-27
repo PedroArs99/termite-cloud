@@ -9,7 +9,8 @@
 </div>
 
 <style lang="scss">
-	.card {
-		max-width: 25rem;
+	.card-title {
+		justify-content: center;
+		padding: 1em;
 	}
 </style>
