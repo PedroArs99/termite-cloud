@@ -1,9 +1,8 @@
-import { Body, Controller, Get, Param, Put } from '@nestjs/common';
+import { Controller, Get } from '@nestjs/common';
 import { CommandBus, QueryBus } from '@nestjs/cqrs';
-import { UpdateDeviceStateCommand } from '../../application/commands/updateState/updateState.command';
-import { GetAllDevicesQuery } from '../../application/queries/GetAllDevices.query';
 import { Device } from '../../models/Device.model';
 import { DeviceDto } from './models/device-dto.model';
+import { GetAllDevicesQuery } from '../../application/queries/GetAllDevices.handler'; 
 
 @Controller('/devices')
 export class HomeDevicesRestController {
@@ -16,16 +15,16 @@ export class HomeDevicesRestController {
     return result.map((device: Device) => DeviceDto.fromDomain(device));
   }
 
-  @Put('/:friendlyName')
-  async updateDeviceState(
-    @Param('friendlyName') friendlyName: string,
-  ): Promise<DeviceDto> {
-    const command = new UpdateDeviceStateCommand(
-      friendlyName,
-    );
+  // @Put('/:friendlyName')
+  // async updateDeviceState(
+  //   @Param('friendlyName') friendlyName: string,
+  // ): Promise<DeviceDto> {
+  //   const command = new UpdateDeviceStateCommand(
+  //     friendlyName,
+  //   );
 
-    const result = await this.commandBus.execute(command);
+  //   const result = await this.commandBus.execute(command);
 
-    return DeviceDto.fromDomain(result);;
-  }
+  //   return DeviceDto.fromDomain(result);
+  // }
 }

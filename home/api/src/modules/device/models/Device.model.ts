@@ -1,7 +1,7 @@
 import { DomainObject } from "src/modules/common/DomainObject.model";
 
 export class Device extends DomainObject {
-    private constructor(
+    constructor(
       readonly friendlyName: string,
     ) {
       super()
