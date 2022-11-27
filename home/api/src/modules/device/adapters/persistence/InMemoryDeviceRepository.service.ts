@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { EventEmitter2 } from '@nestjs/event-emitter';
 import { Event } from 'src/modules/common/Event.model';
-import { DeviceRepository } from '../../application/ports/DeviceRepository.port';
+import { DeviceRepository } from '../../application/ports/Device.repository';
 import { Device } from '../../models/Device.model';
 
 @Injectable()

@@ -1,6 +1,5 @@
 import { Controller, Inject, Logger } from '@nestjs/common';
 import { CommandBus } from '@nestjs/cqrs';
-import { OnEvent } from '@nestjs/event-emitter';
 import {
   Ctx,
   MessagePattern,
@@ -9,13 +8,7 @@ import {
 } from '@nestjs/microservices';
 import { RegisterDevicesCommand } from '../../application/commands/register/register-devices.command';
 import { UpdateDeviceStateCommand } from '../../application/commands/updateState/updateState.command';
-import { DeviceService } from '../../application/ports/DeviceService.port';
-import { DeviceMqttContextUpdated } from '../../models/events/DeviceMqttContextUpdated.event';
 import { DeviceDto } from './models/device-dto.model';
-import {
-  DeviceStateDto,
-  deviceStateToDomain,
-} from './models/device-state-dto.model';
 
 @Controller()
 export class HomeDevicesMqttController {
@@ -23,7 +16,6 @@ export class HomeDevicesMqttController {
 
   constructor(
     private commandBus: CommandBus,
-    @Inject('DeviceService') private deviceService: DeviceService,
   ) {}
 
   @MessagePattern('zigbee2mqtt/bridge/devices')
@@ -41,20 +33,13 @@ export class HomeDevicesMqttController {
   @MessagePattern('zigbee2mqtt/+')
   updateDeviceState(
     @Ctx() metadata: MqttContext,
-    @Payload() state: DeviceStateDto,
+    // @Payload() state: DeviceStateDto,
   ) {
     const friendlyName = metadata.getTopic().replace('zigbee2mqtt/', '');
 
     const command = new UpdateDeviceStateCommand(
       friendlyName,
-      deviceStateToDomain(state),
-      false,
     );
     this.commandBus.execute(command);
-  }
-
-  @OnEvent('deviceMqttContextUpdated')
-  updateDeviceMqttContext(event: DeviceMqttContextUpdated): void {
-    this.deviceService.publishDeviceState(event.device);
   }
 }
