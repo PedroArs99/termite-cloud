@@ -2,7 +2,10 @@ import { Inject } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
 import { Device } from '../../models/Device.model';
 import { DeviceRepository } from '../ports/Device.repository';
-import { GetAllDevicesQuery } from './GetAllDevices.query';
+
+export class GetAllDevicesQuery {
+  constructor(){}
+}
 
 @QueryHandler(GetAllDevicesQuery)
 export class GetAllDevicesHandler
@@ -12,7 +15,7 @@ export class GetAllDevicesHandler
     @Inject('DeviceRepository') private deviceRepo: DeviceRepository,
   ) {}
 
-  async execute(query: GetAllDevicesQuery): Promise<Device[]> {
+  async execute(_: GetAllDevicesQuery): Promise<Device[]> {
     const results = await this.deviceRepo.findAll();
 
     const sortedResults = results.sort((d1, d2) =>
