@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { createEventDispatcher } from 'svelte';
 	import type { Device } from '../models/Device.model';
 	import BrightnessSlider from './lights/BrightnessSlider.svelte';
 	import ColorPicker from './lights/ColorPicker.svelte';
@@ -6,7 +7,15 @@
 	import TemperatureSlider from './lights/TemperatureSlider.svelte';
 
 	export let device: Device;
-	console.log(device.features);
+	const dispatch = createEventDispatcher();
+
+	function onStateChange(key: string, value: any) {
+		dispatch('state', {
+			friendlyName: device.friendlyName,
+			key,
+			value
+		});
+	}
 </script>
 
 <div class="card">
@@ -14,7 +23,7 @@
 	<div class="card-body">
 		{#each Object.keys(device.features) as feature}
 			{#if feature === 'state'}
-				<PowerButton />
+				<PowerButton on:click={() => onStateChange('state', 'TOGGLE')} />
 			{/if}
 			{#if feature === 'brightness'}
 				<BrightnessSlider value={device.state?.['brightness']} />

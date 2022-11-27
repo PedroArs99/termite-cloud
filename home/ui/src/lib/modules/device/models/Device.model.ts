@@ -11,7 +11,12 @@ export class Device implements IDevice {
 		readonly state?: { [key: string]: any }
 	) {}
 
-	static copy(that: Device): Device {
+	static copy(that: IDevice): Device {
 		return new Device(that.features, that.friendlyName, that.state);
+	}
+
+	patchState(key: string, value: any): Device {
+		this.state![key] = value;
+		return new Device(this.features, this.friendlyName, this.state);
 	}
 }
