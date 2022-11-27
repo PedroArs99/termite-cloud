@@ -6,8 +6,8 @@ import { DeviceServiceImpl } from './adapters/mqtt/home-devices-mqtt.service';
 import { InMemoryDeviceRepository } from './adapters/persistence/InMemoryDeviceRepository.service';
 import { HomeDevicesRestController } from './adapters/rest/home-devices-rest.controller';
 import { DeviceWebSocketsGateway } from './adapters/webSockets/device-wev-sockets.gateway';
-import { RegisterDevicesHandler } from './application/commands/register-devices.command';
-import { UpdateDeviceStateHandler } from './application/commands/updateState/updateState.handler';
+import { RegisterDevicesHandler } from './application/commands/registerDevice.command';
+import { UpdateDeviceStateHandler } from './application/commands/updateState.command';
 import { GetAllDevicesHandler } from './application/queries/GetAllDevices.handler';
 
 const handlers = [

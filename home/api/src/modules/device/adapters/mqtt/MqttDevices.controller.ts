@@ -6,8 +6,8 @@ import {
   MqttContext,
   Payload,
 } from '@nestjs/microservices';
-import { RegisterDeviceCommand } from '../../application/commands/register-devices.command';
-import { UpdateDeviceStateCommand } from '../../application/commands/updateState/updateState.command';
+import { RegisterDeviceCommand } from '../../application/commands/registerDevice.command';
+import { UpdateDeviceStateCommand } from '../../application/commands/updateState.command';
 import { DeviceDto, normalizeDefinition } from './models/device-dto.model';
 
 @Controller()
@@ -19,24 +19,24 @@ export class HomeDevicesMqttController {
   @MessagePattern('zigbee2mqtt/bridge/devices')
   updateDeviceList(@Payload() devices: Array<DeviceDto>) {
     devices
-    .filter(device => !!device.definition)
-    .forEach((device) => {
-      const friendly_name = device.friendly_name
-      const features = normalizeDefinition(device.definition);
+      .filter((device) => !!device.definition)
+      .forEach((device) => {
+        const friendly_name = device.friendly_name;
+        const features = normalizeDefinition(device.definition);
 
-      const command = new RegisterDeviceCommand(friendly_name, features);
-      this.commandBus.execute(command);
-    });
+        const command = new RegisterDeviceCommand(friendly_name, features);
+        this.commandBus.execute(command);
+      });
   }
 
   @MessagePattern('zigbee2mqtt/+')
   updateDeviceState(
     @Ctx() metadata: MqttContext,
-    // @Payload() state: DeviceStateDto,
+    @Payload() state: Map<String, any>,
   ) {
     const friendlyName = metadata.getTopic().replace('zigbee2mqtt/', '');
 
-    const command = new UpdateDeviceStateCommand(friendlyName);
+    const command = new UpdateDeviceStateCommand(friendlyName, state);
     this.commandBus.execute(command);
   }
 }

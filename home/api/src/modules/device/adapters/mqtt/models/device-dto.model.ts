@@ -20,11 +20,12 @@ export function normalizeDefinition(
   const features: Map<String, String> = new Map();
 
   const flatennedCapabilities = flattenCapabilities(definition.exposes);
-
+  
   flatennedCapabilities.forEach((capability) => {
     switch (capability.type) {
       case 'enum':
       case 'numeric':
+      case 'composite':
         features[capability.name] = capability.property;
         break;
       default:

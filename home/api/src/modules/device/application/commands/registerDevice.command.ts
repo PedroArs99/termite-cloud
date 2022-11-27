@@ -2,6 +2,7 @@ import { Inject, Logger } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
 import { Device } from '../../models/Device.model';
 import { DeviceRepository } from '../ports/Device.repository';
+import { DeviceService } from '../ports/Device.service';
 
 export class RegisterDeviceCommand {
   constructor(
@@ -18,6 +19,7 @@ export class RegisterDevicesHandler
 
   constructor(
     @Inject('DeviceRepository') private deviceRepo: DeviceRepository,
+    @Inject('DeviceService') private deviceService: DeviceService,
   ) {}
 
   async execute(command: RegisterDeviceCommand): Promise<Device> {
@@ -26,6 +28,7 @@ export class RegisterDevicesHandler
     let device = new Device(command.friendlyName, command.features);
 
     this.deviceRepo.upsert(device);
+    this.deviceService.refreshState(device.friendlyName);
 
     return device;
   }

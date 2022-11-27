@@ -1,6 +1,6 @@
 import { httpClient } from '$lib/utils/HttpClient';
 import { writable } from 'svelte/store';
-import type { Device } from '../models/device/Device.model';
+import { Device, type IDevice } from '../models/Device.model';
 
 function storeFactory() {
 	const { set, subscribe } = writable<Device[]>([]);
@@ -13,7 +13,9 @@ function storeFactory() {
 }
 
 function fetchDevices() {
-	httpClient.get<Device[]>('/api/devices')
+	httpClient
+		.get<IDevice[]>('/api/devices')
+		.then((response) => response.map((device) => Device.copy(device)))
 		.then((response) => devices.setDevices(response));
 }
 

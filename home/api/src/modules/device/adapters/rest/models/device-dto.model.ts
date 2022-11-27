@@ -4,11 +4,10 @@ export class DeviceDto {
   constructor(
     readonly features: Map<String, String>,
     readonly friendlyName: string,
-  ) {
-    this.friendlyName = friendlyName;
-  }
+    readonly state?: Map<String, String>,
+  ) {}
 
   static fromDomain(device: Device): DeviceDto {
-    return new DeviceDto(device.features, device.friendlyName);
+    return new DeviceDto(device.features, device.friendlyName, device.state);
   }
 }
