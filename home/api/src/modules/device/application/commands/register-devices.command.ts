@@ -4,7 +4,10 @@ import { Device } from '../../models/Device.model';
 import { DeviceRepository } from '../ports/Device.repository';
 
 export class RegisterDeviceCommand {
-  constructor(readonly friendlyName: string) {}
+  constructor(
+    readonly friendlyName: string,
+    readonly features: Map<String, String>,
+  ) {}
 }
 
 @CommandHandler(RegisterDeviceCommand)
@@ -20,7 +23,7 @@ export class RegisterDevicesHandler
   async execute(command: RegisterDeviceCommand): Promise<Device> {
     this.logger.log(`Registering Device on runtime: ${command.friendlyName}`);
 
-    let device = new Device(command.friendlyName);
+    let device = new Device(command.friendlyName, command.features);
 
     this.deviceRepo.upsert(device);
 

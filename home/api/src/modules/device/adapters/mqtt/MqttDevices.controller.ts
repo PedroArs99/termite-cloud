@@ -24,7 +24,7 @@ export class HomeDevicesMqttController {
       const friendly_name = device.friendly_name
       const features = normalizeDefinition(device.definition);
 
-      const command = new RegisterDeviceCommand(friendly_name);
+      const command = new RegisterDeviceCommand(friendly_name, features);
       this.commandBus.execute(command);
     });
   }
