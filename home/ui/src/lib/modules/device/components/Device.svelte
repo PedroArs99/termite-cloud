@@ -26,7 +26,7 @@
 				<PowerButton on:click={() => onStateChange('state', 'TOGGLE')} />
 			{/if}
 			{#if feature === 'brightness'}
-				<BrightnessSlider value={device.state?.['brightness']} />
+				<BrightnessSlider on:change={(e) => onStateChange('brightness', e.detail)} value={device.state?.['brightness']} />
 			{/if}
 			{#if feature === 'color_temp'}
 				<TemperatureSlider value={device.state?.['color_temp']} />
