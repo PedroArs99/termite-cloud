@@ -3,6 +3,6 @@ import { HomeConfig } from "./HomeConfig.model";
 
 export class BridgeInfoUpdatedEvent extends Event {
     constructor(readonly config: HomeConfig){
-        super("bridgeInfoUpdated")
+        super("bridgeInfoUpdated", config)
     }
 }

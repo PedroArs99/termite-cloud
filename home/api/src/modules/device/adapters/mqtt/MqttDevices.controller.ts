@@ -36,7 +36,7 @@ export class HomeDevicesMqttController {
   ) {
     const friendlyName = metadata.getTopic().replace('zigbee2mqtt/', '');
 
-    const command = new UpdateDeviceStateCommand(friendlyName, state);
+    const command = new UpdateDeviceStateCommand(friendlyName, state, false);
     this.commandBus.execute(command);
   }
 }
