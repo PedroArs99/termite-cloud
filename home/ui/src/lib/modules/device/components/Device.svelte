@@ -5,6 +5,7 @@
 	import ColorPicker from './lights/ColorPicker.svelte';
 	import PowerButton from './lights/PowerButton.svelte';
 	import TemperatureSlider from './lights/TemperatureSlider.svelte';
+	import SensorValue from './sensor/SensorValue.svelte';
 
 	export let device: Device;
 	const dispatch = createEventDispatcher();
@@ -40,6 +41,12 @@
 			{#if feature === 'color_xy'}
 				<ColorPicker />
 			{/if}
+			{#if feature === 'temperature'}
+				<SensorValue name="Temperature" value={device.state?.['temperature']} unit="&#8451" />
+			{/if}
+			{#if feature === 'humidity'}
+				<SensorValue name="Humidity" value={device.state?.['humidity']} unit="%" />
+			{/if}
 		{/each}
 	</div>
 </div>
@@ -50,7 +57,7 @@
 	}
 
 	.card-body {
-		padding: 1em;
+		padding: 1em 0;
 	}
 
 	.card-title {
