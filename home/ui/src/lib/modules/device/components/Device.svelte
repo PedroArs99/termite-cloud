@@ -26,10 +26,16 @@
 				<PowerButton on:click={() => onStateChange('state', 'TOGGLE')} />
 			{/if}
 			{#if feature === 'brightness'}
-				<BrightnessSlider on:change={(e) => onStateChange('brightness', e.detail)} value={device.state?.['brightness']} />
+				<BrightnessSlider
+					on:change={(e) => onStateChange('brightness', e.detail)}
+					value={device.state?.['brightness']}
+				/>
 			{/if}
 			{#if feature === 'color_temp'}
-				<TemperatureSlider value={device.state?.['color_temp']} />
+				<TemperatureSlider
+					on:change={(e) => onStateChange('color_temp', e.detail)}
+					value={device.state?.['color_temp']}
+				/>
 			{/if}
 			{#if feature === 'color_xy'}
 				<ColorPicker />
