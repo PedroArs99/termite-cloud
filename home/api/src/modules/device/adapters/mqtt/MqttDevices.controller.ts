@@ -32,7 +32,7 @@ export class HomeDevicesMqttController {
   @MessagePattern('zigbee2mqtt/+')
   updateDeviceState(
     @Ctx() metadata: MqttContext,
-    @Payload() state: Map<String, any>,
+    @Payload() state: any,
   ) {
     const friendlyName = metadata.getTopic().replace('zigbee2mqtt/', '');
 
