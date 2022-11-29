@@ -27,8 +27,8 @@ function patchDeviceState(device: Device) {
 		const indexOfDevice = currentState.findIndex((d) => d.friendlyName === response.friendlyName);
 
 		if (indexOfDevice >= 0) {
-			const newState = currentState.splice(indexOfDevice, 1, Device.copy(response));
-			devices.setDevices(newState);
+			currentState.splice(indexOfDevice, 1, Device.copy(response));
+			devices.setDevices(currentState);
 		}
 	});
 }
