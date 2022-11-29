@@ -32,6 +32,8 @@ export class DeviceServiceImpl implements DeviceService {
       `zigbee2mqtt/${event.payload.friendlyName}/set`,
       JSON.stringify(event.payload.state),
     );
+
+    mqttClient.end();
   }
 
   private async connectClient(): Promise<MqttClient> {
