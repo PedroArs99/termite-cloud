@@ -1,6 +1,11 @@
 <script lang="ts">
 	import Fa from 'svelte-fa';
 	import {
+	faBatteryEmpty,
+	faBatteryFull,
+		faBatteryHalf,
+		faBatteryQuarter,
+		faBatteryThreeQuarters,
 		faCogs,
 		faHouseSignal,
 		faLightbulb,
@@ -12,10 +17,27 @@
 
 	export let clazz: string = '';
 	export let color: string | undefined = undefined;
-	export let icon: 'circle' | 'cogs' | 'cold' | 'home' | 'lightbulb' | 'sun' | 'warm';
+	export let icon:
+		| 'batteryEmpty'
+		| 'batteryFull'
+		| 'batteryHalf'
+		| 'batteryQuarter'
+		| 'batteryThreeQuarters'
+		| 'circle'
+		| 'cogs'
+		| 'cold'
+		| 'home'
+		| 'lightbulb'
+		| 'sun'
+		| 'warm';
 	export let size: string = 'lg';
 
 	let icons = {
+		batteryEmpty: faBatteryEmpty,
+		batteryFull: faBatteryFull,
+		batteryHalf: faBatteryHalf,
+		batteryQuarter: faBatteryQuarter,
+		batteryThreeQuarters: faBatteryThreeQuarters,
 		circle: faCircle,
 		cogs: faCogs,
 		cold: faTemperatureLow,

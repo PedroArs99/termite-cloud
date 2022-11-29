@@ -6,6 +6,7 @@
 	import PowerButton from './lights/PowerButton.svelte';
 	import TemperatureSlider from './lights/TemperatureSlider.svelte';
 	import SensorValue from './sensor/SensorValue.svelte';
+	import BatteryLevel from './sensor/BatteryLevel.svelte';
 
 	export let device: Device;
 	const dispatch = createEventDispatcher();
@@ -46,6 +47,9 @@
 			{/if}
 			{#if feature === 'humidity'}
 				<SensorValue name="Humidity" value={device.state?.['humidity']} unit="%" />
+			{/if}
+			{#if feature === 'battery'}
+				<BatteryLevel value={device.state?.['battery']} />
 			{/if}
 		{/each}
 	</div>
