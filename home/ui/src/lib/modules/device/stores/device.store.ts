@@ -18,6 +18,8 @@ function fetchDevices() {
 		.get<IDevice[]>('/api/devices')
 		.then((response) => response.map((device) => Device.copy(device)))
 		.then((response) => devices.setDevices(response));
+
+	initEventListening();
 }
 
 function patchDeviceState(device: Device) {
@@ -42,6 +44,13 @@ function updateDeviceState(friendlyName: string, key: string, value: any) {
 
 		patchDeviceState(device);
 	}
+}
+
+function initEventListening() {
+	const eventSource = new EventSource('/api/devices/events');
+	eventSource.onmessage = ({ data }) => {
+		console.log('New message', JSON.parse(data));
+	};
 }
 
 export const devices = storeFactory();

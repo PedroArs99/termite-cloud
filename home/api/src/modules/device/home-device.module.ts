@@ -5,18 +5,25 @@ import { HomeDevicesMqttController } from './adapters/mqtt/MqttDevices.controlle
 import { DeviceServiceImpl } from './adapters/mqtt/home-devices-mqtt.service';
 import { InMemoryDeviceRepository } from './adapters/persistence/InMemoryDeviceRepository.service';
 import { HomeDevicesRestController } from './adapters/rest/home-devices-rest.controller';
-import { DeviceWebSocketsGateway } from './adapters/webSockets/device-wev-sockets.gateway';
+import { DevicesEventsController } from './adapters/sse/devices-events.controller';
 import { RegisterDevicesHandler } from './application/commands/registerDevice.command';
 import { UpdateDeviceStateHandler } from './application/commands/updateState.command';
 import { GetAllDevicesHandler } from './application/queries/GetAllDevices.handler';
+
+const controllers = [
+  DevicesEventsController,
+  HomeDevicesMqttController,
+  HomeDevicesRestController,
+];
 
 const handlers = [
   GetAllDevicesHandler,
   RegisterDevicesHandler,
   UpdateDeviceStateHandler,
 ];
+
 @Module({
-  controllers: [HomeDevicesMqttController, HomeDevicesRestController],
+  controllers: [...controllers],
   imports: [
     ClientsModule.register([
       {
@@ -36,7 +43,6 @@ const handlers = [
       provide: 'DeviceService',
       useClass: DeviceServiceImpl,
     },
-    DeviceWebSocketsGateway
   ],
 })
 export class HomeDeviceModule {}
