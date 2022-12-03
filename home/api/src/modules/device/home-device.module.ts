@@ -9,6 +9,7 @@ import { DevicesEventsController } from './adapters/sse/devices-events.controlle
 import { RegisterDevicesHandler } from './application/commands/registerDevice.command';
 import { UpdateDeviceStateHandler } from './application/commands/updateState.command';
 import { GetAllDevicesHandler } from './application/queries/GetAllDevices.handler';
+import { GetDevicesEventSourceHandler } from './application/queries/GetDevicesEventSource.handler';
 
 const controllers = [
   DevicesEventsController,
@@ -18,6 +19,7 @@ const controllers = [
 
 const handlers = [
   GetAllDevicesHandler,
+  GetDevicesEventSourceHandler,
   RegisterDevicesHandler,
   UpdateDeviceStateHandler,
 ];

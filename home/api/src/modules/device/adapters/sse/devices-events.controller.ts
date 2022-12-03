@@ -1,17 +1,15 @@
 import { Controller, Sse } from '@nestjs/common';
-import { interval, map, Observable } from 'rxjs';
+import { QueryBus } from '@nestjs/cqrs';
+import { Observable } from 'rxjs';
+import { GetDevicesEventSourceQuery } from '../../application/queries/GetDevicesEventSource.handler';
 
 @Controller('/devices')
 export class DevicesEventsController {
-  
+  constructor(private queryBus: QueryBus) {}
+
   @Sse('events')
-  sse(): Observable<MessageEvent> {
-    return interval(1000).pipe(
-      map((_) => ({
-        data: {
-          date: new Date(),
-        },
-      } as MessageEvent)),
-    );
+  async getDevicesEventSource(): Promise<Observable<MessageEvent>> {
+    const query = new GetDevicesEventSourceQuery();
+    return await this.queryBus.execute(query);
   }
 }
