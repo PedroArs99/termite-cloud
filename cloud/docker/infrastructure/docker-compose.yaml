@@ -20,6 +20,8 @@ services:
     environment:
       - GF_SMTP_USER=${GF_SMTP_USER}
       - GF_SMTP_PASSWORD=${GF_SMTP_PASSWORD}
+      - GF_CLOUDWATCH_ACCESS_KEY=${GF_CLOUDWATCH_ACCESS_KEY}
+      - GF_CLOUDWATCH_SECRET_KEY=${GF_CLOUDWATCH_SECRET_KEY}
     env_file: .env
     networks:
       - tc_infrastructure
