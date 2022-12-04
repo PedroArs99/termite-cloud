@@ -15,8 +15,11 @@ export class Device implements IDevice {
 		return new Device(that.features, that.friendlyName, that.state);
 	}
 
-	patchState(key: string, value: any): Device {
-		this.state![key] = value;
+	patchState(patchedValues: { [key: string]: any }): Device {
+		for (const [key, value] of Object.entries(patchedValues)) {
+			this.state![key] = value;
+		}
+
 		return new Device(this.features, this.friendlyName, this.state);
 	}
 }

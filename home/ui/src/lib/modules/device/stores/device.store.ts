@@ -7,9 +7,25 @@ function storeFactory() {
 
 	return {
 		fetchDevices,
+		setDevice: _setDevice(set),
 		setDevices: (devices: Device[]) => set(devices),
 		subscribe,
 		updateDeviceState
+	};
+}
+
+function _setDevice(set: (this: void, value: Device[]) => void) {
+	return (device: Device) => {
+		const currentList = get(devices);
+		const deviceIndex = currentList.findIndex((d) => d.friendlyName === device.friendlyName);
+
+		if (deviceIndex === -1) {
+			currentList.push(device);
+		} else {
+			currentList.splice(deviceIndex, 1, device);
+		}
+
+		set(currentList);
 	};
 }
 
@@ -20,6 +36,14 @@ function fetchDevices() {
 		.then((response) => devices.setDevices(response));
 
 	initEventListening();
+}
+
+function initEventListening() {
+	const eventSource = new EventSource('/api/devices/events');
+	eventSource.onmessage = ({ data }) => {
+		const device = Device.copy(JSON.parse(data));
+		devices.setDevice(device);
+	};
 }
 
 function patchDeviceState(device: Device) {
@@ -35,22 +59,14 @@ function patchDeviceState(device: Device) {
 	});
 }
 
-function updateDeviceState(friendlyName: string, key: string, value: any) {
+function updateDeviceState(friendlyName: string, patchedValues: { [key: string]: any }) {
 	const currentState = get(devices);
 	let device = currentState.find((d) => d.friendlyName === friendlyName);
-
+	
 	if (device) {
-		device = device.patchState(key, value);
-
+		device!.state = patchedValues;
 		patchDeviceState(device);
 	}
-}
-
-function initEventListening() {
-	const eventSource = new EventSource('/api/devices/events');
-	eventSource.onmessage = ({ data }) => {
-		console.log('New message', JSON.parse(data));
-	};
 }
 
 export const devices = storeFactory();

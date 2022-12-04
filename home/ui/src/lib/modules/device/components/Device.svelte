@@ -11,11 +11,10 @@
 	export let device: Device;
 	const dispatch = createEventDispatcher();
 
-	function onStateChange(key: string, value: any) {
+	function onStateChange(values: { [key: string]: any }) {
 		dispatch('state', {
 			friendlyName: device.friendlyName,
-			key,
-			value
+			...values
 		});
 	}
 </script>
@@ -35,7 +34,7 @@
 			{/if}
 			{#if feature === 'color_temp'}
 				<TemperatureSlider
-					on:change={(e) => onStateChange('color_temp', e.detail)}
+					on:change={(e) => onStateChange({ color_temp: e.detail, color_mode: 'color_temp' })}
 					value={device.state?.['color_temp']}
 				/>
 			{/if}
