@@ -6,11 +6,14 @@ import { MqttClient } from 'mqtt';
 import { Device } from '../../models/Device.model';
 import { OnEvent } from '@nestjs/event-emitter';
 import { DeviceUpdatedEvent } from '../../models/DeviceUpdated.event';
-import e from 'express';
+import { Subject } from 'rxjs';
 
 @Injectable()
 export class DeviceServiceImpl implements DeviceService {
   private logger = new Logger(DeviceServiceImpl.name);
+  private readonly _eventSource = new Subject<Device>();
+
+  readonly eventSource = this._eventSource.asObservable();
 
   constructor(private configService: ConfigService) {}
 
@@ -34,6 +37,10 @@ export class DeviceServiceImpl implements DeviceService {
     );
 
     mqttClient.end();
+  }
+
+  pushDeviceChange(device: Device) {
+    this._eventSource.next(device);
   }
 
   private async connectClient(): Promise<MqttClient> {

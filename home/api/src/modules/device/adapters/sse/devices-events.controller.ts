@@ -1,7 +1,9 @@
 import { Controller, Sse } from '@nestjs/common';
 import { QueryBus } from '@nestjs/cqrs';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { GetDevicesEventSourceQuery } from '../../application/queries/GetDevicesEventSource.handler';
+import { Device } from '../../models/Device.model';
+import { DeviceDto } from '../rest/models/device-dto.model';
 
 @Controller('/devices')
 export class DevicesEventsController {
@@ -10,6 +12,11 @@ export class DevicesEventsController {
   @Sse('events')
   async getDevicesEventSource(): Promise<Observable<MessageEvent>> {
     const query = new GetDevicesEventSourceQuery();
-    return await this.queryBus.execute(query);
+    const eventSource: Observable<Device> = await this.queryBus.execute(query); 
+    return eventSource.pipe(
+      map(device => ({
+        data: DeviceDto.fromDomain(device)
+      }) as MessageEvent)
+    )
   }
 }

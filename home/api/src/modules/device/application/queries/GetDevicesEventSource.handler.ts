@@ -1,7 +1,8 @@
 import { Inject } from '@nestjs/common';
 import { IQueryHandler, QueryHandler } from '@nestjs/cqrs';
-import { interval, map, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Device } from '../../models/Device.model';
+import { DeviceService } from '../ports/Device.service';
 
 export class GetDevicesEventSourceQuery {
   constructor() {}
@@ -9,20 +10,11 @@ export class GetDevicesEventSourceQuery {
 
 @QueryHandler(GetDevicesEventSourceQuery)
 export class GetDevicesEventSourceHandler
-  implements IQueryHandler<GetDevicesEventSourceQuery, Observable<MessageEvent>>
+  implements IQueryHandler<GetDevicesEventSourceQuery, Observable<Device>>
 {
-  constructor() {}
+  constructor(@Inject('DeviceService') private deviceService: DeviceService) {}
 
-  async execute(_: GetDevicesEventSourceQuery): Promise<Observable<MessageEvent>> {
-    return interval(1000).pipe(
-      map(
-        (_) =>
-          ({
-            data: {
-              date: new Date(),
-            },
-          } as MessageEvent),
-      ),
-    );
+  async execute(_: GetDevicesEventSourceQuery): Promise<Observable<Device>> {
+    return this.deviceService.eventSource;
   }
 }

@@ -1,9 +1,9 @@
 import { Inject, Logger } from '@nestjs/common';
 import { CommandHandler, ICommandHandler } from '@nestjs/cqrs';
-import { cp } from 'fs';
 import { Device } from 'src/modules/device/models/Device.model';
 import { DeviceUpdatedEvent } from '../../models/DeviceUpdated.event';
 import { DeviceRepository } from '../ports/Device.repository';
+import { DeviceService } from '../ports/Device.service';
 
 export class UpdateDeviceStateCommand {
   constructor(
@@ -21,6 +21,7 @@ export class UpdateDeviceStateHandler
 
   constructor(
     @Inject('DeviceRepository') private deviceRepo: DeviceRepository,
+    @Inject('DeviceService') private deviceService: DeviceService,
   ) {}
 
   async execute(command: UpdateDeviceStateCommand): Promise<Device> {
@@ -29,8 +30,10 @@ export class UpdateDeviceStateHandler
     let device = await this.deviceRepo.findByFriendlyName(command.friendlyName);
     device = device.updateDeviceState(command.state);
 
-    if(command.stateIsDirty){
-      device.addEvent(new DeviceUpdatedEvent(device))
+    if (command.stateIsDirty) {
+      device.addEvent(new DeviceUpdatedEvent(device));
+    } else {
+      this.deviceService.pushDeviceChange(device);
     }
 
     this.deviceRepo.upsert(device);
