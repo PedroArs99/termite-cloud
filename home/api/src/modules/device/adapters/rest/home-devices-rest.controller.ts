@@ -3,7 +3,7 @@ import { CommandBus, QueryBus } from '@nestjs/cqrs';
 import { Device } from '../../models/Device.model';
 import { DeviceDto } from './models/device-dto.model';
 import { GetAllDevicesQuery } from '../../application/queries/GetAllDevices.handler';
-import { UpdateDeviceStateCommand } from '../../application/commands/updateState.command';
+import { ModifyDeviceStateCommand } from '../../application/commands/modifyDeviceState.command';
 
 @Controller('/devices')
 export class HomeDevicesRestController {
@@ -17,14 +17,12 @@ export class HomeDevicesRestController {
   }
 
   @Put('/:friendlyName')
-  async updateDeviceState(
+  updateDeviceState(
     @Param('friendlyName') friendlyName: string,
     @Body() newState: Map<string, any>,
-  ): Promise<DeviceDto> {
-    const command = new UpdateDeviceStateCommand(friendlyName, newState);
+  ) {
+    const command = new ModifyDeviceStateCommand(friendlyName, newState);
 
-    const result = await this.commandBus.execute(command);
-
-    return DeviceDto.fromDomain(result);
+    this.commandBus.execute(command);
   }
 }

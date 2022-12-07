@@ -23,24 +23,24 @@ export class DeviceServiceImpl implements DeviceService {
     mqttClient.end();
   }
 
-  @OnEvent(DeviceUpdatedEvent.name)
-  async updateDeviceState(event: DeviceUpdatedEvent) {
+  async updateDeviceState(friendlyName:string, newState: Map<string, any>) {
     this.logger.log(
-      `Publishing new Device State for ${event.payload.friendlyName}`,
+      `Publishing new Device State for ${friendlyName}`,
     );
 
     const mqttClient = await this.connectClient();
 
     mqttClient.publish(
-      `zigbee2mqtt/${event.payload.friendlyName}/set`,
-      JSON.stringify(event.payload.state),
+      `zigbee2mqtt/${friendlyName}/set`,
+      JSON.stringify(newState),
     );
 
     mqttClient.end();
   }
 
-  pushDeviceChange(device: Device) {
-    this._eventSource.next(device);
+  @OnEvent(DeviceUpdatedEvent.name)
+  pushDeviceChange(event: DeviceUpdatedEvent) {
+    this._eventSource.next(event.payload);
   }
 
   private async connectClient(): Promise<MqttClient> {

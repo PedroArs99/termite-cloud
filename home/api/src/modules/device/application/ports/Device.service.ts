@@ -5,5 +5,5 @@ export interface DeviceService {
   readonly eventSource: Observable<Device>;
 
   refreshState(friendlyName: string): void;
-  pushDeviceChange(device: Device): void;
+  updateDeviceState(friendlyName: string, newState: Map<string, any>);
 }
