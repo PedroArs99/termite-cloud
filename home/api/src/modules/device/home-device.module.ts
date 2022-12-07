@@ -10,6 +10,7 @@ import { RegisterDevicesHandler } from './application/commands/registerDevice.co
 import { UpdateDeviceStateHandler } from './application/commands/updateState.command';
 import { GetAllDevicesHandler } from './application/queries/GetAllDevices.handler';
 import { GetDevicesEventSourceHandler } from './application/queries/GetDevicesEventSource.handler';
+import { ModifyDeviceStateHandler } from './application/commands/modifyDeviceState.command';
 
 const controllers = [
   DevicesEventsController,
@@ -20,6 +21,7 @@ const controllers = [
 const handlers = [
   GetAllDevicesHandler,
   GetDevicesEventSourceHandler,
+  ModifyDeviceStateHandler,
   RegisterDevicesHandler,
   UpdateDeviceStateHandler,
 ];
