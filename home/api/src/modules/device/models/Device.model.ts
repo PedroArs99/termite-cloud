@@ -11,7 +11,10 @@ export class Device extends DomainObject {
   }
 
   updateDeviceState(state: Map<String, any>): Device {
-    return new Device(this.friendlyName, this.features, state);;
+    const copy = new Device(this.friendlyName, this.features, state);
+    copy.addEvent(new DeviceUpdatedEvent(copy));
+
+    return copy
   }
 
   toString(): string {
