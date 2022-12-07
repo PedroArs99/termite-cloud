@@ -12,8 +12,6 @@ import { DeviceDto, normalizeDefinition } from './models/device-dto.model';
 
 @Controller()
 export class HomeDevicesMqttController {
-  private readonly logger = new Logger(HomeDevicesMqttController.name);
-
   constructor(private commandBus: CommandBus) {}
 
   @MessagePattern('zigbee2mqtt/bridge/devices')
@@ -36,7 +34,7 @@ export class HomeDevicesMqttController {
   ) {
     const friendlyName = metadata.getTopic().replace('zigbee2mqtt/', '');
 
-    const command = new UpdateDeviceStateCommand(friendlyName, state, false);
+    const command = new UpdateDeviceStateCommand(friendlyName, state);
     this.commandBus.execute(command);
   }
 }
