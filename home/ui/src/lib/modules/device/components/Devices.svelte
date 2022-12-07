@@ -8,7 +8,7 @@
 	onMount(() => devices.fetchDevices());
 
 	function onDeviceChange(event: CustomEvent<DeviceStateChange>) {
-		devices.updateDeviceState(event.detail.friendlyName, event.detail);
+		devices.patchDeviceState(event.detail.friendlyName, event.detail.patchedState);
 	}
 </script>
 

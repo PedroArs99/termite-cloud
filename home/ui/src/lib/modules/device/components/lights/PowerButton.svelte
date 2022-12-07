@@ -11,7 +11,7 @@
 
 <div class="icon-wrapper" on:click={onClick}>
 	<Icon
-		clazz="border rounded-full p-3 lg:hover:cursor-pointer lg:hover:bg-primary"
+		clazz="border rounded-full p-3 hover:cursor-pointer hover:bg-primary"
 		icon="lightbulb"
 		size="4x"
 	/>

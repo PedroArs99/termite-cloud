@@ -10,7 +10,7 @@ function storeFactory() {
 		setDevice: _setDevice(set),
 		setDevices: (devices: Device[]) => set(devices),
 		subscribe,
-		updateDeviceState
+		patchDeviceState,
 	};
 }
 
@@ -46,27 +46,8 @@ function initEventListening() {
 	};
 }
 
-function patchDeviceState(device: Device) {
-	httpClient.put<IDevice>(`/api/devices/${device.friendlyName}`, device.state).then((response) => {
-		const currentState = get(devices);
-
-		const indexOfDevice = currentState.findIndex((d) => d.friendlyName === response.friendlyName);
-
-		if (indexOfDevice >= 0) {
-			currentState.splice(indexOfDevice, 1, Device.copy(response));
-			devices.setDevices(currentState);
-		}
-	});
-}
-
-function updateDeviceState(friendlyName: string, patchedValues: { [key: string]: any }) {
-	const currentState = get(devices);
-	let device = currentState.find((d) => d.friendlyName === friendlyName);
-	
-	if (device) {
-		device!.state = patchedValues;
-		patchDeviceState(device);
-	}
+function patchDeviceState(friendlyName: string, patchedValues: Map<String, any>) {
+	httpClient.put<IDevice>(`/api/devices/${friendlyName}`, patchedValues);
 }
 
 export const devices = storeFactory();

@@ -14,7 +14,7 @@
 	function onStateChange(values: { [key: string]: any }) {
 		dispatch('state', {
 			friendlyName: device.friendlyName,
-			...values
+			patchedState: values
 		});
 	}
 </script>
@@ -24,11 +24,11 @@
 	<div class="card-body">
 		{#each Object.keys(device.features) as feature}
 			{#if feature === 'state'}
-				<PowerButton on:click={() => onStateChange('state', 'TOGGLE')} />
+				<PowerButton on:click={() => onStateChange({ state: 'TOGGLE' })} />
 			{/if}
 			{#if feature === 'brightness'}
 				<BrightnessSlider
-					on:change={(e) => onStateChange('brightness', e.detail)}
+					on:change={(e) => onStateChange({ brightness: e.detail })}
 					value={device.state?.['brightness']}
 				/>
 			{/if}
