@@ -38,9 +38,9 @@
 					value={device.state?.['color_temp']}
 				/>
 			{/if}
-			{#if feature === 'color_xy'}
+			<!-- {#if feature === 'color_xy'}
 				<ColorPicker />
-			{/if}
+			{/if} -->
 			{#if feature === 'temperature'}
 				<SensorValue name="Temperature" value={device.state?.['temperature']} unit="&#8451" />
 			{/if}
